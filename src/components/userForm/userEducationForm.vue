@@ -1,3 +1,4 @@
+<template>
 <b-container
      class="mt-4"
      style="box-shadow: 5px 5px 5px 5px gray;" 
@@ -81,21 +82,10 @@
     <b-col class="mt-3 mb-4">
      <b-button variant="warning" style="width: inherit"> Reset </b-button>
     </b-col>
-  </b-row>
-   
-  <b-row>
-    <b-form-checkbox
-      id="checkbox-1"
-      name="checkbox-1"
-      class="mt-3 mr-sm-2 mb-sm-4"
-      value="accepted"
-      >
-      <span style="margin:4px;">Are you experienced person </span>
-    </b-form-checkbox>
   </b-row> 
     </b-form>
    </b-container>
-
+</template>
 <script>
  export default { }
 </script>

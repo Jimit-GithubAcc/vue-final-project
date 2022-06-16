@@ -48,7 +48,7 @@ const routes = [
   {
     path: '/createprofile',
     name: 'UserinfoForm',
-    component: () => import('../components/searchFilter/UserinfoForm.vue')
+    component: () => import('../components/userForm/UserinfoForm.vue')
   }
 ]
 
