@@ -13,7 +13,7 @@
             <modal-resume></modal-resume>
         </div>
         <div class="col-lg-3 mx-auto">
-            <button class="btn btn-primary">Create Your Profile</button>
+            <button class="btn btn-primary" @click="gotoProfileForm">Create Your Profile</button>
         </div>
     </div>
 </div>
@@ -22,7 +22,13 @@
 <script>
 import ModalResume from './ModalResume.vue';
 export default {
-  components: { ModalResume },};
+  components: { ModalResume },
+  methods: {
+    gotoProfileForm() {
+        this.$router.push("/createprofile")
+    }
+  }
+  };
 </script>
 
 <style scoped>

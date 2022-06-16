@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "https://590d-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://1975-103-240-35-190.in.ngrok.io/";
 
 const state = {
     auth_token: null,

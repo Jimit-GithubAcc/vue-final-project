@@ -44,6 +44,11 @@ const routes = [
     name: 'Candidates',
     component: () => import('../components/user/index.vue'),
     // meta: {auth: true}
+  },
+  {
+    path: '/createprofile',
+    name: 'UserinfoForm',
+    component: () => import('../components/searchFilter/UserinfoForm.vue')
   }
 ]
 
