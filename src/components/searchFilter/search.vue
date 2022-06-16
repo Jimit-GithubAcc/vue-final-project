@@ -1,0 +1,34 @@
+<template>
+  <div class="container main__shade]">
+    <div class="row align-items-center" style="min-height: calc(100vh-66px);">
+        <div class="col-lg-6 mx-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button">Search</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-3 mx-auto">
+            <modal-resume></modal-resume>
+        </div>
+        <div class="col-lg-3 mx-auto">
+            <button class="btn btn-primary">Create Your Profile</button>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+import ModalResume from './ModalResume.vue';
+export default {
+  components: { ModalResume },};
+</script>
+
+<style scoped>
+.main__shade {
+  height: 35vh;
+  background: rgba(0, 0, 0, 0.5);
+  margin-top: 3%;
+}
+</style>
