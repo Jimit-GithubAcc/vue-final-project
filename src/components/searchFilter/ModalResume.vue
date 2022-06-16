@@ -67,6 +67,8 @@
 </template>
 
 <script>
+// import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -81,7 +83,9 @@ export default {
     },
     onSubmit(event) {
       event.preventDefault();
+    //   const data = axios.post('https://1975-103-240-35-190.in.ngrok.io/user_cv', this.filelist)
       console.log(this.filelist);
+    //   console.log("Data = ", data);
       this.showModal = false;
     },
     onChange(event) {
