@@ -34,12 +34,6 @@ const routes = [
     // meta: {auth: true}
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: () => import('../components/profile/index.vue'),
-    // meta: {auth: true}
-  },
-  {
     path: '/candidates',
     name: 'Candidates',
     component: () => import('../components/user/index.vue'),
@@ -49,6 +43,32 @@ const routes = [
     path: '/createprofile',
     name: 'UserinfoForm',
     component: () => import('../components/userForm/UserinfoForm.vue')
+  },
+  {
+    path: '/userprofile',
+    name: 'UserProfileDetails',
+    component: () => import('../components/user/UserProfile.vue')
+  },
+  {
+    path: '/companyprofile',
+    name: 'Profile',
+    component: () => import('../components/companyProfile/index.vue'),
+    // meta: {auth: true}
+  },
+  {
+    path: '/companyprofile/postjob',
+    name: 'PostJob',
+    component: () => import('../components/companyProfile/postJob.vue')
+  },
+  {
+    path: '/companyprofile/jobdetails',
+    name: 'JobDetails',
+    component: () => import('../components/companyProfile/jobDetails.vue')
+  },
+  {
+    path: '/companyprofile/profiledetails',
+    name: 'ProfileDetails',
+    component: () => import('../components/companyProfile/profileDetails.vue')
   }
 ]
 
