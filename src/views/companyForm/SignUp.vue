@@ -17,7 +17,7 @@
           </b-col>
 
           <b-col md="6">
-            <b-card-body title="Employeer Register">
+            <b-card-body title="Company Register">
               <b-card-text>
                 <b-form @submit.stop.prevent="onSignup">
                   <b-row>
@@ -51,7 +51,7 @@
                             type="email"
                             placeholder="Enter Email"
                             class="p-2"
-                            v-model="$v.user.email.$model"
+                            v-model="$v.company.email.$model"
                             :state="validateState('email')"
                             required
                           >
@@ -73,7 +73,7 @@
                             type="password"
                             placeholder="Enter Password"
                             class="p-2"
-                            v-model="$v.user.password.$model"
+                            v-model="$v.company.password.$model"
                             :state="validateState('password')"
                             required
                           >
@@ -94,7 +94,7 @@
                             type="password"
                             placeholder="ReEnter Password"
                             class="p-2"
-                            v-model="$v.user.confPassword.$model"
+                            v-model="$v.company.confPassword.$model"
                             :state="validateState('confPassword')"
                             required
                           >
@@ -120,7 +120,7 @@
                     <b-row>
                       <span class="mt-3"
                         >Already on Portal?
-                        <b-link to="/">Sign In</b-link></span
+                        <b-link to="/employerlogin">Sign In</b-link></span
                       >
                     </b-row>
                   </b-row>
@@ -132,18 +132,7 @@
     </b-card>
     </div>
   </b-container>
-
-   <b-container class="mt-4 login__card">
-    <b-card img-src="https://picsum.photos/800/260/?image=3" 
-     style=" background-image: linear-gradient(to top, #decac4, #3e5a51); box-shadow: 5px 5px 5px gray;"
-    img-alt="Card image" img-top>
-         <template>
-            <b-button style="position: relative; left:0;" variant="success" class="mx-3"> Login As Job Seeker</b-button>
-            <b-button style="right:auto;" variant="warning"> Login As Employeer </b-button>
-      </template>
-      </b-card>
-  </b-container>
-  <hr>  
+  
  </section>
 </template>
 
@@ -153,7 +142,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      user: {
+      company: {
         // name: "",
         email: "",
         password: "",
@@ -162,7 +151,7 @@ export default {
     };
   },
   validations: {
-    user: {
+    company: {
       // name: {
       //   required,
       //   minLength: minLength(3),
@@ -185,11 +174,11 @@ export default {
   methods: {
     ...mapActions(["registerUser"]),
     validateState(name) {
-      const { $dirty, $error } = this.$v.user[name];
+      const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
     },
     resetForm() {
-      this.user = {
+      this.company = {
         // name: "",
         email: "",
         password: "",
@@ -200,20 +189,20 @@ export default {
       });
     },
     async onSignup() {
-      this.$v.user.$touch();
-      if (this.$v.user.$anyError) {
+      this.$v.company.$touch();
+      if (this.$v.company.$anyError) {
         return;
       }
-      let data = {
-        user: {
-          email: this.user.email,
-          password: this.user.password,
-          password_confirmation: this.user.confPassword
-        }
-      }
-      this.registerUser(data);
+      // let data = {
+      //   user: {
+      //     email: this.user.email,
+      //     password: this.user.password,
+      //     password_confirmation: this.user.confPassword
+      //   }
+      // }
+      // this.registerUser(data);
       this.resetForm();
-      this.$router.push("/")
+      this.$router.push("/companyprofile")
     },
     
   },

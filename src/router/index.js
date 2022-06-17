@@ -45,11 +45,6 @@ const routes = [
     component: () => import('../components/userForm/UserinfoForm.vue')
   },
   {
-<<<<<<< HEAD
-    path: '/addJob',
-    name: 'addJob',
-    component: () => import('../components/employeer/addJob.vue')
-=======
     path: '/userprofile',
     name: 'UserProfileDetails',
     component: () => import('../components/user/UserProfile.vue')
@@ -74,7 +69,21 @@ const routes = [
     path: '/companyprofile/profiledetails',
     name: 'ProfileDetails',
     component: () => import('../components/companyProfile/profileDetails.vue')
->>>>>>> 75653e26ebfa66a4a8c65e4c4b9dcf17dd73770b
+  },
+  {
+    path: '/firstloginpage',
+    name: 'FirstLoginPage',
+    component: () => import('../views/FirstLoginPage.vue')
+  },
+  {
+    path: '/employerlogin',
+    name: 'EmployerLogin',
+    component: () => import('../views/companyForm/Login.vue')
+  },
+  {
+    path: '/employersignup',
+    name: 'Employersignup',
+    component: () => import('../views/companyForm/SignUp.vue')
   }
 
 ]

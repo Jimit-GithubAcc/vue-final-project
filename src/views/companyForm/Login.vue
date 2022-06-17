@@ -8,7 +8,7 @@
         style="box-shadow: 10px 10px 5px grey;">
         <b-row no-gutters style="margin-top: auto; margin-bottom: auto; justify-content: center;">
            <b-col md="6">
-            <b-card-body title="Employeer Login" body-text-variant="light">
+            <b-card-body title="Company Login" body-text-variant="light">
               <b-card-text>
                 <b-form @submit.stop.prevent="onLogin">
                   <b-row>
@@ -19,7 +19,7 @@
                             type="email"
                             placeholder="Enter Email"
                             class="p-2"
-                            v-model="$v.user.email.$model"
+                            v-model="$v.company.email.$model"
                             :state="validateState('email')"
                             required
                           >
@@ -41,7 +41,7 @@
                             type="password"
                             placeholder="Enter Password"
                             class="p-2"
-                            v-model="$v.user.password.$model"
+                            v-model="$v.company.password.$model"
                             :state="validateState('password')"
                             required
                           >
@@ -64,9 +64,9 @@
                     </b-row>
 
                     <b-row>
-                      <span class="mt-3"
+                      <span class="mt-3 text-info"
                         >New on Portal?
-                        <b-link to="/register">Sign Up</b-link></span
+                        <b-link to="/employersignup" class="text-info">Sign Up</b-link></span
                       >
                     </b-row>
 
@@ -84,18 +84,18 @@
 </template>
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-import { mapActions, mapGetters } from "vuex";
+// import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      user: {
+      company: {
         email: "",
         password: "",
       },
     };
   },
   validations: {
-    user: {
+    company: {
       email: {
         required,
         email,
@@ -107,16 +107,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
+    // ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
   },
   methods: {
-    ...mapActions(["loginUser"]),
+    // ...mapActions(["loginUser"]),
     validateState(name) {
-      const { $dirty, $error } = this.$v.user[name];
+      const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
     },
     resetForm() {
-      this.user = {
+      this.company = {
         email: "",
         password: "",
       };
@@ -125,19 +125,19 @@ export default {
       });
     },
     onLogin() {
-      this.$v.user.$touch();
-      if (this.$v.user.$anyError) {
+      this.$v.company.$touch();
+      if (this.$v.company.$anyError) {
         return;
       }
-      let data = {
-        user: {
-          email: this.user.email,
-          password: this.user.password
-        }
-      }
-      this.loginUser(data)
+      // let data = {
+      //   user: {
+      //     email: this.user.email,
+      //     password: this.user.password
+      //   }
+      // }
+      // this.loginUser(data)
       this.resetForm();
-      this.$router.push("/")
+      this.$router.push("/companyprofile")
     },
   },
 };
@@ -147,7 +147,7 @@ export default {
 a {
   text-decoration: none;
   margin: 5px;
-  color: white;
+  
 }
 .login__card {
   max-width: 800px;

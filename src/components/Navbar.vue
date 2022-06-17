@@ -29,6 +29,9 @@
         <!-- <b-nav-item to="/login"> Login </b-nav-item>  -->
         <!-- <b-nav-item @click="logOut">Logout</b-nav-item> -->
       </b-navbar-nav>
+      <b-navbar-nav tag="li">
+        <b-nav-item to="/firstloginpage">Loginforboth</b-nav-item>
+      </b-navbar-nav>
       <!-- <b-navbar-nav tag="li" v-else>
         <b-nav-item @click="logOut">Logout</b-nav-item>
       </b-navbar-nav> -->
