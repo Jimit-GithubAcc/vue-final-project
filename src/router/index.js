@@ -49,7 +49,13 @@ const routes = [
     path: '/createprofile',
     name: 'UserinfoForm',
     component: () => import('../components/userForm/UserinfoForm.vue')
+  },
+  {
+    path: '/addJob',
+    name: 'addJob',
+    component: () => import('../components/employeer/addJob.vue')
   }
+
 ]
 
 const router = new VueRouter({
