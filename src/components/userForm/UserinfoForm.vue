@@ -14,11 +14,12 @@
           value="accepted"
           v-model="isExperienced"
         >
-          <span style="margin: 4px">Are you experienced person </span>
+          <span style="margin: 4px; font-size: 24px;">Are you experienced person </span>
         </b-form-checkbox>
       </b-row>
     </b-form>
     <user-experience-form v-if="isExperienced"></user-experience-form>
+    <br>
   </div>
 </template>
 <script>
@@ -29,7 +30,7 @@ export default {
   components: { userEducationForm, UserProfileForm, UserExperienceForm },
   data() {
     return {
-        isExperienced: false
+        isExperienced: false,
     }
   },
 };
