@@ -14,7 +14,7 @@
         <b-nav-item to="/candidates">Candidates</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav tag="li">
-        <b-nav-item to="/profile">Profile</b-nav-item>
+        <b-nav-item to="/profile">Profile for Employees</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav tag="li">
         <b-button style="color: black; background-color: white;" to="/login" v-if="!checkLogin">Login</b-button>
