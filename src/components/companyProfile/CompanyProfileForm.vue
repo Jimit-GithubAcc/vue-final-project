@@ -23,6 +23,11 @@
               v-model="$v.company.companyName.$model"
               :state="validateState('companyName')"
             ></b-form-input>
+            <b-form-invalid-feedback
+              id="input-1-live-feedback"
+              style="font-weight: bold"
+              >This is a required field and must be atleast 3 characters.
+            </b-form-invalid-feedback>
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
@@ -34,6 +39,11 @@
                 v-model="$v.company.contact.$model"
                 :state="validateState('contact')"
               ></b-form-input>
+              <b-form-invalid-feedback
+                id="input-1-live-feedback"
+                style="font-weight: bold"
+                >This is a required field.
+              </b-form-invalid-feedback>
             </b-input-group>
           </b-col>
         </b-row>
@@ -65,6 +75,11 @@
               v-model="$v.company.companyDescription.$model"
               :state="validateState('companyDescription')"
             ></b-form-textarea>
+            <b-form-invalid-feedback
+              id="input-1-live-feedback"
+              style="font-weight: bold"
+              >This field is required.
+            </b-form-invalid-feedback>
           </b-col>
         </b-row>
 
@@ -87,6 +102,11 @@
               v-model="$v.company.area.$model"
               :state="validateState('area')"
             ></b-form-input>
+            <b-form-invalid-feedback
+              id="input-1-live-feedback"
+              style="font-weight: bold"
+              >This is a required field.
+            </b-form-invalid-feedback>
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
@@ -98,6 +118,11 @@
                 :state="validateState('city')"
               >
               </b-form-input>
+              <b-form-invalid-feedback
+                id="input-1-live-feedback"
+                style="font-weight: bold"
+                >This is a required field.
+              </b-form-invalid-feedback>
             </b-input-group>
           </b-col>
         </b-row>
@@ -111,6 +136,11 @@
               v-model="$v.company.state.$model"
               :state="validateState('state')"
             ></b-form-input>
+            <b-form-invalid-feedback
+              id="input-1-live-feedback"
+              style="font-weight: bold"
+              >This field is required.
+            </b-form-invalid-feedback>
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
@@ -121,6 +151,11 @@
                 v-model="$v.company.country.$model"
                 :state="validateState('country')"
               ></b-form-input>
+              <b-form-invalid-feedback
+                id="input-1-live-feedback"
+                style="font-weight: bold"
+                >This field is required.
+              </b-form-invalid-feedback>
             </b-input-group>
           </b-col>
         </b-row>
@@ -136,6 +171,11 @@
               v-model="$v.company.streetInfo.$model"
               :state="validateState('streetInfo')"
             ></b-form-textarea>
+            <b-form-invalid-feedback
+              id="input-1-live-feedback"
+              style="font-weight: bold"
+              >This field is required.
+            </b-form-invalid-feedback>
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0"> </b-input-group>
@@ -210,7 +250,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("company_manager",["logoutCompany"]),
+    ...mapActions("company_manager", ["logoutCompany"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
@@ -236,17 +276,17 @@ export default {
     addCompanyDetails() {
       this.$v.company.$touch();
       if (this.$v.company.$anyError) {
-        alert("Please enter your Experience details properly");
+        alert("Please enter all the details properly");
         console.log(this.$v.company);
         return;
       }
       console.log("Company Details = ", this.company);
       this.$router.push("/");
     },
-    logOutCompany(){
-      this.logoutCompany()
-      this.$router.push("/employerlogin")
-    }
+    logOutCompany() {
+      this.logoutCompany();
+      this.$router.push("/employerlogin");
+    },
   },
 };
 </script>
