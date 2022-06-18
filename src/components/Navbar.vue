@@ -44,13 +44,13 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters["isLoggedIn"],
+        ...mapGetters("session_manager",["isLoggedIn"]),
         checkLogin(){
             return window.localStorage.getItem("auth_token")
         }
     },
     methods: {
-        ...mapActions(["logoutUser", "setLogin"]),
+        ...mapActions("session_manager",["logoutUser", "setLogin"]),
         logOut() {
             this.logoutUser()
             this.$router.push("/login")

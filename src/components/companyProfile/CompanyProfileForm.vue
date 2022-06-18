@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Profile Page</h1>
+    <b-button @click="logOutCompany">Logout Company</b-button>
     <b-container
       class="mt-4"
       style="
@@ -170,6 +171,7 @@
 
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -208,6 +210,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("company_manager",["logoutCompany"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
@@ -240,6 +243,10 @@ export default {
       console.log("Company Details = ", this.company);
       this.$router.push("/");
     },
+    logOutCompany(){
+      this.logoutCompany()
+      this.$router.push("/employerlogin")
+    }
   },
 };
 </script>

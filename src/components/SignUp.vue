@@ -169,7 +169,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(["registerUser"]),
+    ...mapActions("session_manager",["registerUser"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;

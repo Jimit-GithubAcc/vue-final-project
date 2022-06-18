@@ -4,8 +4,9 @@ import axios from "axios";
 const BASE_URL = "https://cf59-103-240-35-190.in.ngrok.io/";
 
 const state = {
+
     auth_token: null,
-    user: {
+    company: {
         id: null,
         email: null,
         password: null
@@ -17,11 +18,11 @@ const getters = {
     getAuthToken(state){
         return state.auth_token;
     },
-    getUserEmail(state){
-        return state.user?.email;
+    getCompanyEmail(state){
+        return state.company?.email;
     },
-    getUserID(state){
-        return state.user?.id;
+    getCompanyID(state){
+        return state.company?.id;
     },
     isLoggedIn(state){
         const loggedOut = state.auth_token == null || state.auth_token == JSON.stringify(null);
@@ -33,56 +34,58 @@ const getters = {
 }
 
 const actions = {
-    registerUser({commit}, payload){
+    registerCompany({commit}, payload){
         return new Promise((resolve, reject) => {
-            axios.post(`${BASE_URL}users`, payload)
+            axios.post(`${BASE_URL}companies`, payload)
             .then((response) => {
-                commit("setUserInfo", response)
+                commit("setCompanyInfo", response)
                 console.log(response);
                 resolve(response)
             })
             .catch((err) => reject(err))
         })
     },
-    loginUser({commit}, payload){
+    loginCompany({commit}, payload){
         new Promise((resolve, reject) => {
-            axios.post(`${BASE_URL}users/sign_in`, payload)
+            axios.post(`${BASE_URL}companies/sign_in`, payload)
             .then((response) => {
                 console.log(response);
-                commit("setUserInfo", response)
+                commit("setCompanyInfo", response)
                 resolve(response)
             })
             .catch((err) => reject(err))
         })
     },
-    logoutUser({commit}){
+    logoutCompany({commit}){
         const config = {
             headers: {
                 authorization: state.auth_token
             }
         }
         new Promise((resolve, reject) => {
-            axios.delete(`${BASE_URL}users/sign_out`, config)
+            axios.delete(`${BASE_URL}companies/sign_out`, config)
             .then(() => {
-                commit("resetUserInfo")
+                console.log("Msg---")
+                commit("resetCompanyInfo")
                 resolve()
             })
             .catch((err) => {
+                console.log("Msg");
                 reject(err);
             })
         })
     },
-    loginUserWithToken({commit}, payload){
+    loginCompanyWithToken({commit}, payload){
         const config = {
             headers: {
                 Authorization: payload.auth_token
             }
         }
         new Promise((resolve, reject) => {
-            axios.get(`${BASE_URL}member-data`, config)
+            axios.get(`${BASE_URL}company-data`, config)
             .then((response) => {
                 console.log(response)
-                commit("setUserInfoFromToken", response)
+                commit("setCompanyInfoFromToken", response)
                 resolve(response)
             })
             .catch((err) => reject(err))
@@ -94,18 +97,18 @@ const actions = {
 }
 
 const mutations = {
-    setUserInfo(state, data) {
-        state.user = data.data.user;
+    setCompanyInfo(state, data) {
+        state.company = data.data.company;
         state.auth_token = data.headers.authorization;
         axios.defaults.headers.common["Authorization"] = data.headers.authorization;
         localStorage.setItem("auth_token",data.headers.authorization);
     },
-    setUserInfoFromToken(state, data) {
-        state.user = data.data.user;
+    setCompanyInfoFromToken(state, data) {
+        state.company = data.data.company;
         state.auth_token = localStorage.getItem("auth_token");
     },
-    resetUserInfo(state){
-        state.user = {
+    resetCompanyInfo(state){
+        state.company = {
             id: null,
             email: null,
             password: null

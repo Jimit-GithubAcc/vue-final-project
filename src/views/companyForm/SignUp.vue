@@ -172,7 +172,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(["registerUser"]),
+    ...mapActions("company_manager",["registerCompany"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
@@ -193,14 +193,14 @@ export default {
       if (this.$v.company.$anyError) {
         return;
       }
-      // let data = {
-      //   user: {
-      //     email: this.user.email,
-      //     password: this.user.password,
-      //     password_confirmation: this.user.confPassword
-      //   }
-      // }
-      // this.registerUser(data);
+      let data = {
+        company: {
+          email: this.company.email,
+          password: this.company.password,
+          password_confirmation: this.company.confPassword
+        }
+      }
+      this.registerCompany(data);
       this.resetForm();
       this.$router.push("/companyprofile")
     },

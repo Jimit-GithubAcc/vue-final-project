@@ -84,7 +84,7 @@
 </template>
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-// import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -107,10 +107,10 @@ export default {
     },
   },
   computed: {
-    // ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
+    ...mapGetters(["getAuthToken", "isLoggedIn"])
   },
   methods: {
-    // ...mapActions(["loginUser"]),
+    ...mapActions("company_manager",["loginCompany"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
@@ -129,13 +129,14 @@ export default {
       if (this.$v.company.$anyError) {
         return;
       }
-      // let data = {
-      //   user: {
-      //     email: this.user.email,
-      //     password: this.user.password
-      //   }
-      // }
-      // this.loginUser(data)
+
+      let data = {
+        company: {
+          email: this.company.email,
+          password: this.company.password
+        }
+      }
+      this.loginCompany(data)
       this.resetForm();
       this.$router.push("/companyprofile")
     },

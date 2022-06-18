@@ -1,0 +1,11 @@
+User - Image and Date validation
+Company - Image and file validation
+CV - New way and validation
+Company - validation in login and signup. 
+
+
+API - working - Login user w/o token, login company\
+		signup company, login company		
+
+
+Not working - logout company

@@ -112,10 +112,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
+    ...mapGetters("session_manager",["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
   },
   methods: {
-    ...mapActions(["loginUser"]),
+    ...mapActions("session_manager",["loginUser"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
