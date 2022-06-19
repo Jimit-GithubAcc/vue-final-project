@@ -84,6 +84,11 @@ const routes = [
     path: '/employersignup',
     name: 'Employersignup',
     component: () => import('../views/companyForm/SignUp.vue')
+  },
+  {
+    path: '/user/jobdetails',
+    name: 'JobDetails',
+    component: () => import('../views/jobs/JobDetails.vue')
   }
 
 ]

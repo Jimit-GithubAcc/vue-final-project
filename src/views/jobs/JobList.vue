@@ -12,14 +12,20 @@
           This is a wider card with supporting text below as a natural lead-in
           to additional content. This content is a little bit longer.
         </b-card-text>
-        <b-button variant="success">Apply Now</b-button>
+        <b-button variant="success" @click="redirectToJobDetail">Apply Now</b-button>
       </b-card>
     </b-card-group>
   </b-container>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    redirectToJobDetail(){
+      this.$router.push('/user/jobdetails')
+    }
+  }
+};
 </script>
 
 <style scoped>
