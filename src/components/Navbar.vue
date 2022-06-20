@@ -15,7 +15,7 @@
         </b-nav-item-dropdown>
 
       <b-navbar-nav tag="li">
-        <b-nav-item to="/candidates">Candidates</b-nav-item>
+        <b-nav-item to="/allcandidates">Candidates</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav tag="li">
         <b-nav-item to="/companyprofile">Profile for Employers</b-nav-item>

@@ -34,10 +34,15 @@ const routes = [
     // meta: {auth: true}
   },
   {
-    path: '/candidates',
-    name: 'Candidates',
-    component: () => import('../components/user/index.vue'),
+    path: '/allcandidates',
+    name: 'AllCandidates',
+    component: () => import('../components/candidates/AllCandidates.vue'),
     // meta: {auth: true}
+  },
+  {
+    path: '/candidate/:id',
+    name: 'OneCandidateDetails',
+    component: () => import('../components/candidates/OneCandidateDetails.vue')
   },
   {
     path: '/createprofile',
