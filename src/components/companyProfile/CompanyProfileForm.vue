@@ -52,13 +52,15 @@
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
               Company Logo:
-              <input type="file" class="custom-file-upload" />
+              <input type="file" class="custom-file-upload" 
+                v-on:change="addLogo($event)" />
             </b-input-group>
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
               Company Banner:
-              <input type="file" class="custom-file-upload" />
+              <input type="file" class="custom-file-upload" 
+                v-on:change="addBanner($event)"/>
             </b-input-group>
           </b-col>
         </b-row>
@@ -85,7 +87,7 @@
 
         <b-row>
           <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
-            Add Image posts:
+            Add Image posts(Optional):
             <input type="file" class="custom-file-upload" multiple />
           </b-input-group>
         </b-row>
@@ -255,6 +257,24 @@ export default {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
     },
+    addLogo(e) {
+    var files = e.target.files || e.dataTransfer.files;
+       const ext = files[0].name.split('.').pop();
+         if(ext === 'jpg' || ext === 'png' || ext === 'JPG' || ext === 'PNG'){
+         this.company.companyLogo = files[0].name;  
+         }else {
+          this.$toast.error("Logo should be jpg or png.",{ timeout : 3000 }); 
+         }
+       },
+       addBanner(e) {
+          var files = e.target.files || e.dataTransfer.files;
+          const ext = files[0].name.split('.').pop();
+         if(ext === 'jpg' || ext === 'png' || ext === 'JPG' || ext === 'PNG'){
+              this.company.companyBanner = files[0].name;  
+           }else {
+             this.$toast.error("Banner should be jpg or png.",{ timeout : 3000 }); 
+          }
+       },
     resetForm() {
       (this.company = {
         companyName: "",
@@ -271,21 +291,31 @@ export default {
       }),
         this.$nextTick(() => {
           this.$v.$reset();
+          this.$toast("Reset done",{ timeout : 3000 });
         });
     },
     addCompanyDetails() {
       this.$v.company.$touch();
       if (this.$v.company.$anyError) {
-        alert("Please enter all the details properly");
-        console.log(this.$v.company);
+         this.$toast.error("Please enter all the details properly.",{ timeout : 3000 });
+         console.log(this.$v.company);
+         if(!this.company.companyLogo){
+         this.$toast.error("Please add a logo.",{ timeout : 3000 });
+         } 
+         if(!this.company.companyBanner){
+         this.$toast.error("Please add a banner.",{ timeout : 3000 });
+         }
         return;
-      }
+      } 
+       
       console.log("Company Details = ", this.company);
       this.$router.push("/");
+      this.$toast.success("company details added successfully.",{ timeout : 3000 });
     },
     logOutCompany() {
       this.logoutCompany();
       this.$router.push("/employerlogin");
+      this.$toast.success("Logout successfull",{ timeout : 3000 });
     },
   },
 };

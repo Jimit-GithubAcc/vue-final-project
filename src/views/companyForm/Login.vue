@@ -66,7 +66,7 @@
                     <b-row>
                       <span class="mt-3 text-info"
                         >New on Portal?
-                        <b-link to="/employersignup" class="text-info">Sign Up</b-link></span
+                        <b-link @click="toRegister" class="text-info">Sign Up</b-link></span
                       >
                     </b-row>
 
@@ -122,7 +122,11 @@ export default {
       };
       this.$nextTick(() => {
         this.$v.$reset();
-      });
+        });
+    },
+    toRegister(){
+     this.$router.push("/employersignup");
+      this.$toast("Employeer signUp page",{ timeout : 3000 });
     },
     onLogin() {
       this.$v.company.$touch();
@@ -139,6 +143,7 @@ export default {
       this.loginCompany(data)
       this.resetForm();
       this.$router.push("/companyprofile")
+      this.$toast.success("Employeer login successful",{ timeout : 3000 });
     },
   },
 };

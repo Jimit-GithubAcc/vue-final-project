@@ -119,7 +119,7 @@
                     <b-row>
                       <span class="mt-3"
                         >Already on Portal?
-                        <b-link to="/">Sign In</b-link></span
+                        <b-link to="/login">Sign In</b-link></span
                       >
                     </b-row>
                   </b-row>
@@ -199,7 +199,8 @@ export default {
       }
       this.registerUser(data);
       this.resetForm();
-      this.$router.push("/")
+      this.$toast.success("User registration successful",{ timeout : 3000 });
+      this.$router.push("/login")
     },
     
   },

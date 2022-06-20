@@ -232,17 +232,19 @@ export default {
       }),
       this.$nextTick(() => {
         this.$v.$reset();
+        this.$toast("reset done",{ timeout : 3000 }); 
       });
     },
     addJobDetails() {
       this.$v.company.$touch();
       if (this.$v.company.$anyError) {
-        alert("Please enter all the details properly");
+        this.$toast.error("Please enter the details properly",{ timeout : 3000 }); 
         console.log(this.$v.company);
         return;
       }
       console.log("Job Details = ", this.company);
       this.$router.push("/");
+      this.$toast.success("Job posted successfully",{ timeout : 3000 }); 
     },
   },
 };

@@ -16,9 +16,11 @@ export default {
     methods: {
         loginAsJobSeeker(){
             this.$router.push('/login')
+            this.$toast.info("Job Seeker login",{ timeout : 3000 });
         },
         loginAsEmployer(){
             this.$router.push('/employerlogin')
+            this.$toast.info("Employeer login",{ timeout : 3000 });
         }
     }        
 }

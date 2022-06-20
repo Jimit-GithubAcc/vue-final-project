@@ -202,7 +202,9 @@ export default {
       }
       this.registerCompany(data);
       this.resetForm();
-      this.$router.push("/companyprofile")
+      this.$toast.success("Employeer registration successful",{ timeout : 3000 });
+      this.$router.push("/employerlogin")
+      
     },
     
   },

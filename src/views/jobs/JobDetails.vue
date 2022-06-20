@@ -27,7 +27,7 @@
 export default {
   methods: {
     applyForJob() {
-      alert("Applied Successfully");
+      this.$toast.success("Job applied successfully.",{ timeout : 3000 });
     },
   },
 };
