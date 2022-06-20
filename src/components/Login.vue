@@ -72,7 +72,7 @@
                     <b-row>
                       <span class="mt-3"
                         >New on Portal?
-                        <b-link to="/register">Sign Up</b-link></span
+                        <b-link @click="toRegister">Sign Up</b-link></span
                       >
                     </b-row>
 
@@ -129,6 +129,10 @@ export default {
         this.$v.$reset();
       });
     },
+    toRegister(){
+     this.$router.push("/register");
+      this.$toast("user signUp page",{ timeout : 3000 });
+    },
     onLogin() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
@@ -143,6 +147,7 @@ export default {
       this.loginUser(data)
       this.resetForm();
       this.$router.push("/")
+      this.$toast.success("user login successful",{ timeout : 3000 });
     },
   },
 };

@@ -197,13 +197,14 @@ export default {
     addUserExperience() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-        alert("Please enter your Experience details properly")
+        this.$toast.error("Please enter experience details properly.",{ timeout : 3000 });
         console.log(this.$v.user);
         return;
       }
       console.log(this.user);
+      this.$toast.success("Added experience details properly.",{ timeout : 3000 });
       this.$router.push("/");
-    },
+      },
   }
 }
 </script>

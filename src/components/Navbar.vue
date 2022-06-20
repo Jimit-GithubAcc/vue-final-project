@@ -30,7 +30,7 @@
         <!-- <b-nav-item @click="logOut">Logout</b-nav-item> -->
       </b-navbar-nav>
       <b-navbar-nav tag="li">
-        <b-nav-item to="/firstloginpage">Loginforboth</b-nav-item>
+        <b-nav-item @click="logInForboth">Loginforboth</b-nav-item>
       </b-navbar-nav>
       <!-- <b-navbar-nav tag="li" v-else>
         <b-nav-item @click="logOut">Logout</b-nav-item>
@@ -54,7 +54,12 @@ export default {
         logOut() {
             this.logoutUser()
             this.$router.push("/login")
+            this.$toast.success("Logout successfull",{ timeout : 3000 });
         },
+        logInForboth() {
+          this.$router.push("/firstloginpage");
+          this.$toast.info("Job Portal logIns",{ timeout : 3000 });
+        }
     }
 };
 </script>

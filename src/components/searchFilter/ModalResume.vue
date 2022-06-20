@@ -6,7 +6,7 @@
       id="add-attachments-modal"
       centered
       hide-footer
-      title="File(s) Upload"
+      title="File Upload"
       :size="filelist.length ? 'lg' : ''">
     <b-form @submit="onSubmit">
       <b-row class="mt-2 px-3">
@@ -37,7 +37,7 @@
         <b-col class="file-drop-column my-4 my-xl-0 p-0">
           <div class="file-drop-area bg-light" @dragover="dragover" @drop="drop">
 
-            <input type="file" multiple name="file-input" id="file-input"
+            <input type="file"  name="file-input" id="file-input"
                    class="file-input invisible" @change="onChange"/>
 
             <label for="file-input" class="w-100 text-center cursor-pointer text-muted m-0 px-3 py-5">
@@ -45,20 +45,19 @@
                 <b-icon-cloud-upload-fill font-scale="3"></b-icon-cloud-upload-fill>
               </p>
               <div>
-                <p class=mb-0>Drop your file(s) here</p>
+                <p class=mb-0>Drop your file here</p>
                 <p class=mb-0>or <span class=text-info>choose from computer</span></p>
               </div>
             </label>
           </div>
         </b-col>
       </b-row>
-
       <div class="float-right mt-4">
         <b-button variant="secondary" @click="$bvModal.hide('add-attachments-modal')" class="mr-3">
           Cancel
         </b-button>
         <b-button type="submit" variant="success" class="m-2">
-          Upload file(s)
+          Upload file
         </b-button>
       </div>
     </b-form>
@@ -75,7 +74,7 @@ export default {
       showModal: false,
       file: '',
       filelist: [],
-    };
+     };
   },
   methods: {
     uploadResume() {
@@ -85,6 +84,11 @@ export default {
       event.preventDefault();
     //   const data = axios.post('https://1975-103-240-35-190.in.ngrok.io/user_cv', this.filelist)
       console.log(this.filelist);
+         if(!this.filelist.length){
+            this.$toast.error("CV not added. ",{ 
+                  position: "top-right",
+                  timeout : 3000 });
+         }
     //   console.log("Data = ", data);
       this.showModal = false;
     },
@@ -92,9 +96,23 @@ export default {
       const fileArray = [...event.target.files]; 
       fileArray.forEach((file) => {
         const fileName = file.name.replace(/\.[^/.]+$/, "");  
-        const extension = file.name.split('.').pop();         
-        this.filelist.push({fileName, extension, file});      
-      })
+        const extension = file.name.split('.').pop();
+        console.log(extension);
+        if(extension === 'pdf' || extension === 'PDF' || extension === 'docx' || extension === 'DOCX'){
+
+              if(!this.filelist.length){
+                    this.filelist.push({fileName, extension, file}); 
+                  } else if(this.filelist.length === 1){
+                this.filelist.splice(0,1,{fileName, extension, file});
+                console.log(this.filelist);
+              }
+            }
+           else { 
+             this.$toast.info(" File extension should be pdf or docx.",{ 
+                  position: "top-right",
+                  timeout : 3000 });
+            }          
+        })
     },
     remove(i) {
       this.filelist.splice(i, 1);

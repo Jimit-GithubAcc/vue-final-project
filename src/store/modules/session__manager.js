@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "https://cf59-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://83af-103-240-35-190.in.ngrok.io/";
 
 const state = {
     auth_token: null,
@@ -40,7 +40,7 @@ const actions = {
                 commit("setUserInfo", response)
                 console.log(response);
                 resolve(response)
-            })
+             })
             .catch((err) => reject(err))
         })
     },
@@ -50,7 +50,8 @@ const actions = {
             .then((response) => {
                 console.log(response);
                 commit("setUserInfo", response)
-                resolve(response)
+                resolve(response) 
+                this.$toast.success(response.message,{ timeout : 3000 });
             })
             .catch((err) => reject(err))
         })

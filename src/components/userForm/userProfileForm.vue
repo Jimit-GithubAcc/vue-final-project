@@ -42,7 +42,8 @@
         <b-col>
           <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
             Profile Pic: (*Optional)
-            <input type="file" class="custom-file-upload" required />
+            <input type="file" class="custom-file-upload" v-on:change="addPic($event)"
+            />
             <b-form-invalid-feedback
               id="input-3-live-feedback"
               style="font-weight: bold"
@@ -133,11 +134,21 @@ export default {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
     },
+    addPic(e) {
+    var files = e.target.files || e.dataTransfer.files;
+        const ext = files[0].name.split('.').pop();
+         if(ext === 'jpg' || ext === 'png' || ext === 'JPG' || ext === 'PNG'){
+         this.user.profilePic = files[0].name;  
+         }else {
+          this.$toast.error("Profile pic should be jpg or png.",{ timeout : 3000 }); 
+         }
+       },
     resetForm() {
       this.user = {
         name: "",
         contact: null,
         gender: "",
+        profilePic:""
       };
       this.$nextTick(() => {
         this.$v.$reset();
@@ -146,11 +157,13 @@ export default {
     addUserProfile() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-        alert("Please enter your profile details properly")
+        this.$toast.error("Please enter profile details properly.",{ timeout : 3000 }); 
         return;
       }
       console.log(this.user);
+      this.$toast.success("User profile details added.",{ timeout : 3000 });
       this.$router.push("/");
+
     },
   },
 };
