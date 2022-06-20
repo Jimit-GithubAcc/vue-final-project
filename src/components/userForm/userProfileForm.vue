@@ -32,7 +32,7 @@
             <b-form-invalid-feedback
               id="input-2-live-feedback"
               style="font-weight: bold"
-              >Please enter your contact number.
+              >Please enter valid contact number.
             </b-form-invalid-feedback>
           </b-input-group>
         </b-col>
@@ -85,6 +85,7 @@
             style="width: inherit"
             type="button"
             @click="addUserProfile"
+            :disabled="$v.$invalid"
           >
             Submit
           </b-button>

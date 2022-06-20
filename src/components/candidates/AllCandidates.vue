@@ -4,7 +4,7 @@
     All Candidates
   </h1>
   
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-3">
   <div class="col mb-4" v-for="i in 10" :key="i">
     <div class="card" style="background-color: rgba(0, 0, 0, 0.2)">
        <b-img src="https://picsum.photos/200/200/?image=41" class="rounded-circle p-4" alt="Circle image"></b-img>
