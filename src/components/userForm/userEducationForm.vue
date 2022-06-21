@@ -263,22 +263,28 @@ export default {
         description: "",
       };
       this.$nextTick(() => {
+        this.$toast.info("reset done.",{ timeout : 3000 });
         this.$v.$reset();
       });
     },
     addUserEducation() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-        // alert("Please enter your education details properly")
+         alert("Please enter your education details properly")
+
         if(!this.user.start_date.length){
            this.$toast.error("Enter start date.",{ timeout : 3000 });
         }
         if(!this.user.end_date.length){
              this.$toast.error("Enter end date.",{ timeout : 3000 });
         }
+
+        this.$toast.error("Please enter education details properly.",{ timeout : 3000 });
+
         console.log(this.$v.user);
         return;
       }
+      this.$toast.success("Added education details successfully.",{ timeout : 3000 });
       console.log(this.user);
       this.$router.push("/");
     },

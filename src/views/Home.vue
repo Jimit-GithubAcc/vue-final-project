@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>HomePage</h1>
     <SearchVue></SearchVue>
     <job-list></job-list>
     <job-categories></job-categories>

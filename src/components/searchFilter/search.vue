@@ -1,6 +1,6 @@
 <template>
-  <div class="container main__shade]">
-    <div class="row align-items-center" style="min-height: calc(100vh-66px);">
+  <div class="container main__shade d-flex flex-column">
+    <div class="row align-items-center justify-content-center" style="min-height: calc(100vh-66px);margin: 8%;">
         <div class="col-lg-6 mx-auto">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for...">
@@ -34,7 +34,8 @@ export default {
 <style scoped>
 .main__shade {
   height: 35vh;
-  background: rgba(0, 0, 0, 0.5);
+  /*background: rgba(0, 0, 0, 0.5);*/
+  background-image: conic-gradient(red, green, blue, black);
   margin-top: 3%;
 }
 </style>
