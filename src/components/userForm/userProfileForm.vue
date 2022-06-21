@@ -152,6 +152,7 @@ export default {
         profilePic:""
       };
       this.$nextTick(() => {
+        this.$toast("Reset done.",{ timeout : 3000 });
         this.$v.$reset();
       });
     },
@@ -160,7 +161,7 @@ export default {
       if (this.$v.user.$anyError) {
         this.$toast.error("Please enter profile details properly.",{ timeout : 3000 }); 
         return;
-      }
+      } 
       console.log(this.user);
       this.$toast.success("User profile details added.",{ timeout : 3000 });
       this.$router.push("/");

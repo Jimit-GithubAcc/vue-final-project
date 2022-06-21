@@ -240,6 +240,7 @@ export default {
         description: "",
       };
       this.$nextTick(() => {
+        this.$toast.info("reset done.",{ timeout : 3000 });
         this.$v.$reset();
       });
     },
@@ -247,9 +248,11 @@ export default {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
         // alert("Please enter your education details properly")
+        this.$toast.error("Please enter education details properly.",{ timeout : 3000 });
         console.log(this.$v.user);
         return;
       }
+      this.$toast.success("Added education details successfully.",{ timeout : 3000 });
       console.log(this.user);
       this.$router.push("/");
     },
