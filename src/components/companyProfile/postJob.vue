@@ -97,7 +97,8 @@
               <b-form-input
                 id="inline-form-input-username"
                 placeholder="End date"
-                type="date"
+                v-model="$v.company.lastDate.$model"
+                type="date" :min="minDate"
               ></b-form-input>
             </b-input-group>
           </b-col>
@@ -188,7 +189,7 @@ export default {
         experience: "",
         location: "",
         jobTitle: "",
-        date: "",
+        lastDate: "",
         link: "",
       },
     };
@@ -209,6 +210,7 @@ export default {
         minLength: minLength(3)
       },
       location: { required },
+      lastDate: { required },
     },
   },
   methods: {
@@ -226,7 +228,7 @@ export default {
         experience: "",
         location: "",
         jobTitle: "",
-        date: "",
+        lastDate: "",
         link: "",
         selected: []
       }),
@@ -238,6 +240,9 @@ export default {
     addJobDetails() {
       this.$v.company.$touch();
       if (this.$v.company.$anyError) {
+            if(!this.company.lastDate.length ){
+              this.$toast.error("Last date is required.",{ timeout : 3000  });
+            }
         this.$toast.error("Please enter the details properly",{ timeout : 3000 }); 
         console.log(this.$v.company);
         return;
@@ -246,6 +251,22 @@ export default {
       this.$router.push("/");
       this.$toast.success("Job posted successfully",{ timeout : 3000 }); 
     },
+  },
+  computed: {
+   minDate(){
+          let d = new Date();
+            console.log(d)
+            let p1 = d.getFullYear()
+            let p2 = d.getMonth()
+            let p3 = d.getDate() 
+            p3 += 7; p2+=1;
+            if(p2<10){ p2 = "0" + p2; }
+            if(p3<10){ p3 = "0" + p3; }  
+
+          var min =  p1 + "-" + p2 + "-" + p3
+           console.log(min)
+          return min;
+       },
   },
 };
 </script>
