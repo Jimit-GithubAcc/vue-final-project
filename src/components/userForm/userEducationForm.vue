@@ -266,8 +266,6 @@ export default {
     addUserEducation() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-         alert("Please enter your education details properly")
-
         if(!this.user.start_date.length){
            this.$toast.error("Enter start date.",{ timeout : 3000 });
         }
