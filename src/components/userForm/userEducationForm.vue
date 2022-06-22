@@ -87,6 +87,7 @@
           <b-form-input
             id="input-5"
             class="mr-sm-2 mb-sm-0"
+            v-model="user.start_date"
             type="date"
           ></b-form-input>
           <b-form-invalid-feedback
@@ -100,6 +101,8 @@
           <b-input-group class="mr-sm-2 mb-sm-0">
             <b-form-input
               id="input-6"
+              v-model="user.end_date"
+              :min="minDate"
               placeholder="End date"
               type="date"
             ></b-form-input>
@@ -187,34 +190,54 @@ export default {
       description: {
         required,
       },
-      // dateObject: {
-      //   required,
+      start_date: {
+       required,
+      },
+      end_date: {
+       required,
+      },
+       // dateObject: {}
+      //    required,
       //   maxValue: maxValue(new Date()),
       // },
-      // start_date: {
-      //   required,
-      //   isBefore(date){
-      //      return (
-      //     moment, // coerce to a moment object
-      //     momentDate => momentDate.isBefore(this.end_date) // validate it!
-      //   )(date)
-      //   },
-      //   minValue(val){
-      //     return new Date(val) > new Date()
-      //   },
-      //   maxValue(val, {end_date}){
-      //     return new Date(end_date) > new Date(val)
-      //   }
-      // },
-      // end_date: {
-      //   required,
-      //   minValue(val, {start_date}){
-      //     return new Date(val) > new Date(start_date)
-      //   }
-      // }
+     /*   start_date: {
+           required,
+           isBefore(date){
+              return (
+              moment, // coerce to a moment object
+             momentDate => momentDate.isBefore(this.end_date) // validate it!
+          )(date)
+          },
+           minValue(val){
+             return new Date(val) > new Date()
+          },
+           maxValue(val, {end_date}){
+            return new Date(end_date) > new Date(val)
+          }
+        },
+         end_date: {
+           required,
+           minValue(val, {start_date}){
+           return new Date(val) > new Date(start_date)
+          }
+       }*/
+
     },
   },
   computed: {
+       minDate(){
+          console.log(this.user.start_date);
+          let d = new Date(this.user.start_date);
+            let p1 = d.getFullYear()
+            let p2 = d.getMonth()
+            let p3 = d.getDate() 
+            if(p2<10){ p2 = "0" + p2; }
+            if(p3<10){ p3 = "0" + p3; }  
+
+          var min = (p1 + 2) + "-" + p2 + "-" + p3
+           console.log(min)
+          return min;
+       }
     // dateObject() {
     //   return this.start_date ? new Date(this.start_date) : null;
     // },
@@ -226,7 +249,7 @@ export default {
       return $dirty ? !$error : null;
     },
     resetForm() {
-      this.user = {
+     this.user = {
         sname: "",
         degree: "",
         field: "",
@@ -243,8 +266,17 @@ export default {
     addUserEducation() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-        // alert("Please enter your education details properly")
+         alert("Please enter your education details properly")
+
+        if(!this.user.start_date.length){
+           this.$toast.error("Enter start date.",{ timeout : 3000 });
+        }
+        if(!this.user.end_date.length){
+             this.$toast.error("Enter end date.",{ timeout : 3000 });
+        }
+
         this.$toast.error("Please enter education details properly.",{ timeout : 3000 });
+
         console.log(this.$v.user);
         return;
       }
