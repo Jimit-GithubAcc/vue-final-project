@@ -1,5 +1,8 @@
 <template>
-  <b-container class="mt-4" style="box-shadow: 5px 5px 5px 5px gray; max-width: 800px;">
+  <b-container
+    class="mt-4"
+    style="box-shadow: 5px 5px 5px 5px gray; max-width: 800px"
+  >
     <h1>Enter Profile details</h1>
     <b-form inline>
       <b-row>
@@ -42,7 +45,10 @@
         <b-col>
           <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
             Profile Pic: (*Optional)
-            <input type="file" class="custom-file-upload" v-on:change="addPic($event)"
+            <input
+              type="file"
+              class="custom-file-upload"
+              v-on:change="addPic($event)"
             />
             <b-form-invalid-feedback
               id="input-3-live-feedback"
@@ -103,6 +109,7 @@
 
 <script>
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -130,41 +137,72 @@ export default {
       },
     },
   },
+  mounted() {
+    // async fetchSkills(){
+    //    try{
+    //     const response = await axios.get('https://bbea-103-240-35-190.in.ngrok.io/skills');
+    //     this.skills = response.data.data;
+    //     console.log("A",this.skills)
+    //     } catch(err){
+    //     console.log(err)
+    //    }
+    // }
+  },
   methods: {
+    ...mapActions("userData", ["addProfile"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
     },
     addPic(e) {
-    var files = e.target.files || e.dataTransfer.files;
-        const ext = files[0].name.split('.').pop();
-         if(ext === 'jpg' || ext === 'png' || ext === 'JPG' || ext === 'PNG'){
-         this.user.profilePic = files[0].name;  
-         }else {
-          this.$toast.error("Profile pic should be jpg or png.",{ timeout : 3000 }); 
-         }
-       },
+      var files = e.target.files || e.dataTransfer.files;
+      const ext = files[0].name.split(".").pop();
+      if (ext === "jpg" || ext === "png" || ext === "JPG" || ext === "PNG") {
+        this.user.profilePic = files[0].name;
+      } else {
+        this.$toast.error("Profile pic should be jpg or png.", {
+          timeout: 3000,
+        });
+      }
+    },
     resetForm() {
       this.user = {
         name: "",
         contact: null,
         gender: "",
-        profilePic:""
+        profilePic: "",
       };
       this.$nextTick(() => {
-        this.$toast("Reset done.",{ timeout : 3000 });
+        this.$toast("Reset done.", { timeout: 3000 });
         this.$v.$reset();
       });
     },
     addUserProfile() {
       this.$v.user.$touch();
       if (this.$v.user.$anyError) {
-        this.$toast.error("Please enter profile details properly.",{ timeout : 3000 }); 
+        this.$toast.error("Please enter profile details properly.", {
+          timeout: 3000,
+        });
         return;
-      } 
+      }
       console.log(this.user);
-      this.$toast.success("User profile details added.",{ timeout : 3000 });
-      this.$router.push("/");
+      this.addProfile({
+        name: this.user.name,
+        contact_number: this.user.contact,
+        gender: this.user.gender,
+        avatar: this.user.profilePic,
+        skill: this.user.selected,
+      })
+        .then((success) => {
+          console.log(success);
+          this.resetForm();
+          this.$toast.success("User profile details added.", { timeout: 3000 });
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$toast.error("Some error occured.", { timeout: 3000 });
+        });
 
     },
   },
