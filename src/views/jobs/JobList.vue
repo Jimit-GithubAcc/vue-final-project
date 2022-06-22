@@ -4,27 +4,38 @@
       <h1 class="mt-3">Latest Jobs</h1>
     </div>
     <b-card-group deck class="jobcard">
-      <b-card class="jobcard__col" v-for="i in 10" :key="i">
+      <b-card class="jobcard__col" v-for="job in getJobs" :key="job.id">
         <div style="">
-          <span class="badge rounded-pill bg-danger" style="zindex: '1'; left: '50%'">New</span>
+          <span class="badge rounded-pill bg-danger" style="zindex: '1'; left: '50%'">{{job.job_title}}</span>
         </div>
         <b-card-text class="jobcard__text">
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+          <p>{{job.job_description}}</p>
+          {{job.location}}
         </b-card-text>
-        <b-button variant="success" @click="redirectToJobDetail">Apply Now</b-button>
+        <b-button variant="success" @click="redirectToJobDetail(job.id)">Apply Now</b-button>
+        <b-button variant="primary" class="m-2" @click="saveJob(job.id)">Save Job</b-button>
       </b-card>
     </b-card-group>
   </b-container>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
+  computed : {
+    ...mapGetters("jobs",["getJobs"]),
+    // ...mapGetters("userjob",["saveJob"])
+  },
   methods: {
-    redirectToJobDetail(){
-      this.$router.push('/user/jobdetails')
+    ...mapActions("jobs",["getJob"]),
+    ...mapActions("userjob",["saveJob"]),
+    redirectToJobDetail(id){
+      this.$router.push(`/user/jobdetails/${id}`)
     }
-  }
+  },
+  mounted() {
+    this.getJob()
+  },
 };
 </script>
 

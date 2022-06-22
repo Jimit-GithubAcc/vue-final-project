@@ -21,14 +21,19 @@
         <b-nav-item to="/companyprofile">Profile for Employers</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav tag="li">
-        <b-button style="color: black; background-color: white;" to="/login" v-if="!checkLogin">Login</b-button>
-        <b-nav-item-dropdown text="My Account" toggle-class="text-white" right v-else>
+        <b-button style="color: black; background-color: white;" to="/login" v-show="!checkUserLogin">Login</b-button>
+        <b-nav-item-dropdown text="My Account" toggle-class="text-white" right v-show="checkUserLogin">
           <b-dropdown-item to="/userprofile">Profile</b-dropdown-item>
-          <b-dropdown-item @click="logOut">Logout</b-dropdown-item>
+          <!-- <b-dropdown-item @click="logOut">Logout</b-dropdown-item> -->
         </b-nav-item-dropdown>
         <!-- <b-nav-item to="/login"> Login </b-nav-item>  -->
         <!-- <b-nav-item @click="logOut">Logout</b-nav-item> -->
       </b-navbar-nav>
+
+        <b-navbar-nav tag="li" v-show="checkUserLogin">
+        <b-nav-item @click="logOut">Logout</b-nav-item>
+      </b-navbar-nav>
+
       <b-navbar-nav tag="li">
         <b-nav-item @click="logInForboth">Loginforboth</b-nav-item>
       </b-navbar-nav>
@@ -47,6 +52,10 @@ export default {
         ...mapGetters("session_manager",["isLoggedIn"]),
         checkLogin(){
             return window.localStorage.getItem("auth_token")
+        },
+        checkUserLogin(){
+          console.log("isLoggedIn = ", this.isLoggedIn)
+          return this.isLoggedIn
         }
     },
     methods: {
@@ -60,7 +69,7 @@ export default {
           this.$router.push("/firstloginpage");
           this.$toast.info("Job Portal logIns",{ timeout : 3000 });
         }
-    }
+    },
 };
 </script>
 

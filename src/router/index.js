@@ -11,6 +11,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/register',
@@ -25,6 +33,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../components/Login.vue'),
+    
     // meta: {auth: false}
   },
   {
@@ -37,6 +46,14 @@ const routes = [
     path: '/allcandidates',
     name: 'AllCandidates',
     component: () => import('../components/candidates/AllCandidates.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
     // meta: {auth: true}
   },
   {
@@ -45,7 +62,7 @@ const routes = [
     component: () => import('../components/candidates/OneCandidateDetails.vue')
   },
   {
-    path: '/createprofile',
+    path: '/createprofile/:id',
     name: 'UserinfoForm',
     component: () => import('../components/userForm/UserinfoForm.vue')
   },
@@ -58,6 +75,14 @@ const routes = [
     path: '/companyprofile',
     name: 'Profile',
     component: () => import('../components/companyProfile/index.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
     // meta: {auth: true}
   },
   {
@@ -91,7 +116,7 @@ const routes = [
     component: () => import('../views/companyForm/SignUp.vue')
   },
   {
-    path: '/user/jobdetails',
+    path: '/user/jobdetails/:id',
     name: 'JobDetails',
     component: () => import('../views/jobs/JobDetails.vue')
   }
@@ -102,6 +127,10 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
+
+// router.beforeEach(() => {
+//   console.log("Store = ", store)
+// })
 
 // router.beforeEach((to, from, next) => {
 //   if('auth' in to.meta && to.meta.auth){

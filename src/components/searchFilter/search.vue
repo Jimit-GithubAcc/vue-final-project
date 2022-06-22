@@ -13,19 +13,35 @@
             <modal-resume></modal-resume>
         </div>
         <div class="col-lg-3 mx-auto">
-            <button class="btn btn-primary" @click="gotoProfileForm">Create Your Profile</button>
+            <button class="btn btn-primary" @click="gotoProfileForm(user.id)">Create Your Profile</button>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios';
 import ModalResume from './ModalResume.vue';
 export default {
   components: { ModalResume },
+  data() {
+    return {
+      user: {
+        id: null
+      }
+    }
+  },
+  mounted() {
+    this.getUserDetail()
+  },
   methods: {
-    gotoProfileForm() {
-        this.$router.push("/createprofile")
+    gotoProfileForm(id) {
+        this.$router.push(`/createprofile/${id}`)
+    },
+    async getUserDetail(){
+      const response = await axios.get(`https://bbea-103-240-35-190.in.ngrok.io/member-data`)
+      // console.log("Member-Data = ",response.data)
+      this.user.id = response.data.user.id
     }
   }
   };

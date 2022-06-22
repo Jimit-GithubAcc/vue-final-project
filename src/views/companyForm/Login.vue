@@ -140,10 +140,15 @@ export default {
           password: this.company.password
         }
       }
-      this.loginCompany(data)
-      this.resetForm();
-      this.$router.push("/companyprofile")
-      this.$toast.success("Employeer login successful",{ timeout : 3000 });
+      this.loginCompany(data).then(success => {
+        console.log(success);
+        this.resetForm();
+        this.$router.push("/companyprofile")
+        this.$toast.success("Employeer login successful",{ timeout : 3000 });
+      }).catch(error => {
+        console.log(error)
+        this.$toast.error("Credentials are not valid", { timeout: 3000 });
+      })
     },
   },
 };

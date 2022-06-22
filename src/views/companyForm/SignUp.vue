@@ -188,7 +188,7 @@ export default {
         this.$v.$reset();
       });
     },
-    async onSignup() {
+    onSignup() {
       this.$v.company.$touch();
       if (this.$v.company.$anyError) {
         return;
@@ -200,10 +200,15 @@ export default {
           password_confirmation: this.company.confPassword
         }
       }
-      this.registerCompany(data);
-      this.resetForm();
-      this.$toast.success("Employeer registration successful",{ timeout : 3000 });
-      this.$router.push("/employerlogin")
+      this.registerCompany(data).then((success) => {
+        console.log(success);
+        this.resetForm();
+        this.$toast.success("Employeer registration successful",{ timeout : 3000 });
+        this.$router.push("/employerlogin")
+      }).catch((error) => {
+        console.log(error)
+        this.$toast.error("User Already exists",{ timeout : 3000 });
+      });
       
     },
     

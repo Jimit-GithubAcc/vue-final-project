@@ -154,6 +154,7 @@
 </template>
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -219,12 +220,7 @@ export default {
     // },
   },
   methods: {
-    // vClass($v) {
-    //   return {
-    //     error: $v.$error,
-    //     valid: !$v.$invalid,
-    //   };
-    // },
+    ...mapActions("userData",["addUserEducationData"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
@@ -252,9 +248,29 @@ export default {
         console.log(this.$v.user);
         return;
       }
-      this.$toast.success("Added education details successfully.",{ timeout : 3000 });
-      console.log(this.user);
-      this.$router.push("/");
+      let data = {
+        user: {
+          education:{
+            school_name: this.user.sname,
+            degree: this.user.degree,
+            field_of_study: this.user.field,
+            start_date: this.user.start_date,
+            end_date: this.user.end_date,
+            description: this.user.description,
+            grade: this.user.grade
+          }
+        }
+      }
+      this.addUserEducationData(data.user).then(success => {
+        console.log(success);
+        this.resetForm()
+        this.$toast.success("Added education details successfully.",{ timeout : 3000 });
+        // console.log(this.user);
+        this.$router.push("/");
+      }).catch(error => {
+        console.log(error);
+        this.$toast.error("Some Error Occured",{ timeout : 3000 });
+      })
     },
   },
 };

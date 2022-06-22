@@ -1,8 +1,5 @@
 import axios from "axios";
-
-
-const BASE_URL = "https://83af-103-240-35-190.in.ngrok.io/";
-
+const BASE_URL = "https://bbea-103-240-35-190.in.ngrok.io/";
 const state = {
     auth_token: null,
     user: {
@@ -27,9 +24,6 @@ const getters = {
         const loggedOut = state.auth_token == null || state.auth_token == JSON.stringify(null);
         return !loggedOut
     },
-    loggedIn(state){
-        return state.logged || false
-    }
 }
 
 const actions = {
@@ -37,41 +31,49 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post(`${BASE_URL}users`, payload)
             .then((response) => {
-                commit("setUserInfo", response)
-                console.log(response);
-                resolve(response)
+                if(response.status === 200) {
+                    commit("setUserInfo", response)
+                    // console.log(response);
+                    resolve(true)
+                    this.$toast.success(response.message,{ timeout : 3000 });
+                }
              })
             .catch((err) => reject(err))
         })
     },
     loginUser({commit}, payload){
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             axios.post(`${BASE_URL}users/sign_in`, payload)
             .then((response) => {
-                console.log(response);
-                commit("setUserInfo", response)
-                resolve(response) 
-                this.$toast.success(response.message,{ timeout : 3000 });
+                // console.log(response.data);
+                if(response.status === 200) {
+                    commit("setUserInfo", response)
+                    resolve(true) 
+                    this.$toast.success(response.message,{ timeout : 3000 });
+                }
             })
             .catch((err) => reject(err))
         })
     },
+    // logoutUser({commit}){
+    //     const config = {
+    //         headers: {
+    //             authorization: state.auth_token
+    //         }
+    //     }
+    //     new Promise((resolve, reject) => {
+    //         axios.delete(`${BASE_URL}users/sign_out`, config)
+    //         .then(() => {
+    //             commit("resetUserInfo")
+    //             resolve()
+    //         })
+    //         .catch((err) => {
+    //             reject(err);
+    //         })
+    //     })
+    // },
     logoutUser({commit}){
-        const config = {
-            headers: {
-                authorization: state.auth_token
-            }
-        }
-        new Promise((resolve, reject) => {
-            axios.delete(`${BASE_URL}users/sign_out`, config)
-            .then(() => {
-                commit("resetUserInfo")
-                resolve()
-            })
-            .catch((err) => {
-                reject(err);
-            })
-        })
+        commit("resetUserInfo")
     },
     loginUserWithToken({commit}, payload){
         const config = {
@@ -100,10 +102,13 @@ const mutations = {
         state.auth_token = data.headers.authorization;
         axios.defaults.headers.common["Authorization"] = data.headers.authorization;
         localStorage.setItem("auth_token",data.headers.authorization);
+        state.logged = true;
+        state.user.id = data.data.user.id
     },
     setUserInfoFromToken(state, data) {
         state.user = data.data.user;
         state.auth_token = localStorage.getItem("auth_token");
+        state.logged = true;
     },
     resetUserInfo(state){
         state.user = {
@@ -114,6 +119,7 @@ const mutations = {
         state.auth_token = null;
         localStorage.removeItem("auth_token");
         axios.defaults.headers.common["Authorization"] = null;
+        state.logged = false;
     },
     setLogin(state){
         state.logged = !state.logged

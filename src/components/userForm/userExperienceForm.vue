@@ -131,6 +131,7 @@
 </template>
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -176,6 +177,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("userData",["addUserExperienceData"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
@@ -201,9 +203,29 @@ export default {
         this.$toast.error("Please enter experience details properly.",{ timeout : 3000 });
         return;
       }
-      console.log(this.user);
-      this.$toast.success("Added experience details successfully.",{ timeout : 3000 });
-      this.$router.push("/");
+      let data = {
+        user: {
+          experience:{
+            title: this.user.jobName,
+            company_name: this.user.companyName,
+            location: this.user.location,
+            start_date: this.user.start_date,
+            end_date: this.user.end_date,
+            description: this.user.description,
+            employment_type: this.user.employmentType
+          }
+        }
+      }
+      this.addUserExperienceData(data.user).then(success => {
+        console.log(success);
+        this.resetForm()
+        this.$toast.success("Added experience details successfully.",{ timeout : 3000 });
+        // console.log(this.user);
+        this.$router.push("/");
+      }).catch(error => {
+        console.log(error);
+        this.$toast.error("Some Error Occured",{ timeout : 3000 });
+      })
       },
   }
 }

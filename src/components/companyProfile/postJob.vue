@@ -177,6 +177,7 @@
 
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -212,6 +213,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("jobs",["addJob"]),
     // addSkill() { this.skills.push({name:''}) },
     removeSkill(i) {
       this.skills.splice(i);
@@ -242,9 +244,27 @@ export default {
         console.log(this.$v.company);
         return;
       }
-      console.log("Job Details = ", this.company);
-      this.$router.push("/");
-      this.$toast.success("Job posted successfully",{ timeout : 3000 }); 
+      let lastDate = new Date(this.company.date)
+      let data = {
+        company:{
+          job_description: this.company.jobDescription,
+          year_of_exp: this.company.experience,
+          location: this.company.location,
+          job_title: this.company.jobTitle,
+          last_date_to_apply: lastDate,
+          job_application_link: this.company.link
+        }
+      }
+      this.addJob(data.company).then(success => {
+        console.log(success);
+        this.resetForm()
+        this.$toast.success("Job posted successfully.",{ timeout : 3000 });
+        // console.log(this.user);
+        this.$router.push("/");
+      }).catch(error => {
+        console.log(error);
+        this.$toast.error("Some Error Occured",{ timeout : 3000 });
+      })
     },
   },
 };

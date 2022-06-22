@@ -2,18 +2,20 @@
   <div class="card mx-auto main__card" style="width: 40rem">
 
     <div class="card-body bg-info">
-      <h3 class="card-title">Job Title</h3>
+      <h3 class="card-title">{{job.job_title}}</h3>
 
       <p class="card-text"><b>Description : </b>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati tenetur omnis delectus eum sequi reiciendis deleniti harum aperiam. Nesciunt, natus.
+        {{job.job_description}}
       </p>
-      <p class="card-text"><b>Location : </b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, minus!
+      <p class="card-text"><b>Location : </b> {{job.location}}
       </p>
       <p class="card-text"><b>Skills Required : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, qui.
       </p>
-      <p class="card-text"><b>Experience needed : </b>3 years
+      <p class="card-text"><b>Experience needed : </b>{{job.year_of_exp}}
       </p>
-      <p class="card-text"><b>Last Date to Apply : </b>{{new Date}}
+      <p class="card-text"><b>Last Date to Apply : </b>{{job.last_date_to_apply}}
+      </p>
+      <p class="card-text" v-if="job.job_application_link"><b>Link : </b>{{job.job_application_link}}
       </p>
 
       <b-button class="btn btn-success rounded-2" @click="applyForJob">
@@ -24,11 +26,31 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+// import { mapActions, mapGetters } from 'vuex';
 export default {
+  data() {
+    return {
+      job: {}
+    }
+  },
+  computed : {
+    // ...mapGetters("jobs",["getJob"])
+  },
   methods: {
+    // ...mapActions("jobs",["getSingleJob"]),
     applyForJob() {
       this.$toast.success("Job applied successfully.",{ timeout : 3000 });
     },
+    async getSingleJob(){
+      const id = this.$route.params.id
+      const result = await axios.get(`https://bbea-103-240-35-190.in.ngrok.io/jobs/${id}`)
+      this.job = result.data.data
+    }
+  },
+  mounted() {
+    this.getSingleJob()
   },
 };
 </script>

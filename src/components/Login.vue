@@ -4,7 +4,7 @@
       <b-card
         no-body
         class="overflow-hidden login__card w-100"
-        style="background-image: linear-gradient(to left,rgb(242, 112, 156),rgb(255, 148, 114)); box-shadow: 10px 10px 5px pink;">
+        style="background-image: linear-gradient(to left,rgb(242, 112, 156),rgb(255, 148, 114));box-shadow: 10px 10px 5px pink;">
         <b-row no-gutters style="align-items: center">
           <b-col md="6">
             <b-card-img
@@ -31,11 +31,11 @@
                           >
                           </b-form-input>
                           <b-form-invalid-feedback
-                    id="input-1-live-feedback"
-                    style="font-weight: bold"
-                    >Please enter valid email address.</b-form-invalid-feedback
-                  >
-                          
+                            id="input-1-live-feedback"
+                            style="font-weight: bold"
+                            >Please enter valid email
+                            address.</b-form-invalid-feedback
+                          >
                         </b-form-group>
                       </b-col>
                     </b-row>
@@ -53,17 +53,22 @@
                           >
                           </b-form-input>
                           <b-form-invalid-feedback
-                    id="input-1-live-feedback"
-                    style="font-weight: bold"
-                    >This is a required field and must be atleast 6 characters.
-                  </b-form-invalid-feedback>
+                            id="input-1-live-feedback"
+                            style="font-weight: bold"
+                            >This is a required field and must be atleast 6
+                            characters.
+                          </b-form-invalid-feedback>
                         </b-form-group>
                       </b-col>
                     </b-row>
 
                     <b-row>
                       <b-col class="mt-4">
-                        <b-button variant="primary" block style="width: inherit" type="submit"
+                        <b-button
+                          variant="primary"
+                          block
+                          style="width: inherit"
+                          type="submit"
                           >SignIn</b-button
                         >
                       </b-col>
@@ -75,7 +80,6 @@
                         <b-link @click="toRegister">Sign Up</b-link></span
                       >
                     </b-row>
-
                   </b-row>
                 </b-form>
               </b-card-text>
@@ -112,10 +116,15 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("session_manager",["getAuthToken", "getUserEmail", "getUserID", "isLoggedIn"])
+    ...mapGetters("session_manager", [
+      "getAuthToken",
+      "getUserEmail",
+      "getUserID",
+      "isLoggedIn",
+    ]),
   },
   methods: {
-    ...mapActions("session_manager",["loginUser"]),
+    ...mapActions("session_manager", ["loginUser"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
@@ -129,9 +138,9 @@ export default {
         this.$v.$reset();
       });
     },
-    toRegister(){
-     this.$router.push("/register");
-      this.$toast("user signUp page",{ timeout : 3000 });
+    toRegister() {
+      this.$router.push("/register");
+      this.$toast("user signUp page", { timeout: 3000 });
     },
     onLogin() {
       this.$v.user.$touch();
@@ -141,13 +150,18 @@ export default {
       let data = {
         user: {
           email: this.user.email,
-          password: this.user.password
-        }
-      }
-      this.loginUser(data)
-      this.resetForm();
-      this.$router.push("/")
-      this.$toast.success("user login successful",{ timeout : 3000 });
+          password: this.user.password,
+        },
+      };
+      this.loginUser(data).then((success) => {
+        console.log(success);
+        this.resetForm();
+        this.$router.push("/");
+        this.$toast.success("user login successful", { timeout: 3000 });
+      }).catch((error) => {
+        this.$toast.error("Credentials are not valid", { timeout: 3000 });
+        console.log(error);
+      });
     },
   },
 };
@@ -170,7 +184,6 @@ a {
     margin-top: auto;
     width: 100%;
   }
-  
 }
 </style>
 
