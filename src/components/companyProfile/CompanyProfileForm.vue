@@ -186,7 +186,20 @@
             </b-form-invalid-feedback>
           </b-col>
           <b-col>
-            <b-input-group class="mt-3 mr-sm-2 mb-sm-0"> </b-input-group>
+            <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
+              <b-form-input
+                id="inline-form-input-username"
+                placeholder="Pincode.."
+                required
+                v-model="$v.company.pincode.$model"
+                :state="validateState('pincode')"
+              ></b-form-input>
+              <b-form-invalid-feedback
+                id="input-1-live-feedback"
+                style="font-weight: bold"
+                >This field is required.
+              </b-form-invalid-feedback>
+            </b-input-group>
           </b-col>
         </b-row>
 
@@ -218,7 +231,7 @@
 </template>
 
 <script>
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -235,6 +248,7 @@ export default {
         state: "",
         country: "",
         streetInfo: "",
+        pincode: "",
       },
     };
   },
@@ -246,6 +260,8 @@ export default {
       },
       contact: {
         required,
+        minLength: minLength(10),
+        maxLength: maxLength(10),
       },
       companyDescription: {
         required,
@@ -255,10 +271,12 @@ export default {
       state: { required },
       country: { required },
       streetInfo: { required },
+      pincode: { required },
     },
   },
   methods: {
     ...mapActions("company_manager", ["logoutCompany"]),
+    ...mapActions("companyData", ["addCompanyData"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
       return $dirty ? !$error : null;
@@ -267,7 +285,7 @@ export default {
       var files = e.target.files || e.dataTransfer.files;
       const ext = files[0].name.split(".").pop();
       if (ext === "jpg" || ext === "png" || ext === "JPG" || ext === "PNG") {
-        this.company.companyLogo = files[0].name;
+        this.company.companyLogo = files[0];
       } else {
         this.$toast.error("Logo should be jpg or png.", { timeout: 3000 });
       }
@@ -276,7 +294,7 @@ export default {
       var files = e.target.files || e.dataTransfer.files;
       const ext = files[0].name.split(".").pop();
       if (ext === "jpg" || ext === "png" || ext === "JPG" || ext === "PNG") {
-        this.company.companyBanner = files[0].name;
+        this.company.companyBanner = files[0];
       } else {
         this.$toast.error("Banner should be jpg or png.", { timeout: 3000 });
       }
@@ -294,6 +312,7 @@ export default {
         state: "",
         country: "",
         streetInfo: "",
+        pincode: "",
       }),
         this.$nextTick(() => {
           this.$v.$reset();
@@ -315,18 +334,39 @@ export default {
       }
       if (!this.company.companyBanner) {
         this.$toast.error("Please add a valid banner.", { timeout: 3000 });
-        return
+        return;
       } else {
-        console.log("Company Details = ", this.company);
-        this.$router.push("/");
-        this.$toast.success("company details added successfully.", {
-          timeout: 3000,
-        });
+        let data = {
+          name: this.company.companyName,
+          about: this.company.companyDescription,
+          phone: this.company.contact,
+          logo: this.company.companyLogo,
+          banner: this.company.companyBanner,
+          company_street: this.company.streetInfo,
+          company_area: this.company.area,
+          company_city: this.company.city,
+          company_country: this.company.country,
+          company_pincode: this.company.pincode,
+          company_state: this.company.state,
+        };
+        this.addCompanyData(data)
+          .then((success) => {
+            console.log(success);
+            this.resetForm();
+            this.$router.push("/");
+            this.$toast.success("company details added successfully.", {
+              timeout: 3000,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error("Some error occurred", { timeout: 3000 });
+          });
       }
     },
     logOutCompany() {
       this.logoutCompany();
-      this.$router.push("/employerlogin");
+      this.$router.push("/firstloginpage");
       this.$toast.success("Logout successfull", { timeout: 3000 });
     },
   },

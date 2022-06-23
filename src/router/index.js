@@ -40,6 +40,14 @@ const routes = [
     path: '/employeer',
     name: 'Employeer',
     component: () => import('../components/employeer/index.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
     // meta: {auth: true}
   },
   {
@@ -59,17 +67,41 @@ const routes = [
   {
     path: '/candidate/:id',
     name: 'OneCandidateDetails',
-    component: () => import('../components/candidates/OneCandidateDetails.vue')
+    component: () => import('../components/candidates/OneCandidateDetails.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/createprofile/:id',
     name: 'UserinfoForm',
-    component: () => import('../components/userForm/UserinfoForm.vue')
+    component: () => import('../components/userForm/UserinfoForm.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
-    path: '/userprofile',
+    path: '/userprofile/:id',
     name: 'UserProfileDetails',
-    component: () => import('../components/user/UserProfile.vue')
+    component: () => import('../components/user/UserProfile.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/companyprofile',
@@ -88,17 +120,41 @@ const routes = [
   {
     path: '/companyprofile/postjob',
     name: 'PostJob',
-    component: () => import('../components/companyProfile/postJob.vue')
+    component: () => import('../components/companyProfile/postJob.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/companyprofile/jobdetails',
     name: 'JobDetails',
-    component: () => import('../components/companyProfile/jobDetails.vue')
+    component: () => import('../components/companyProfile/jobDetails.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/companyprofile/profiledetails',
     name: 'ProfileDetails',
-    component: () => import('../components/companyProfile/profileDetails.vue')
+    component: () => import('../components/companyProfile/profileDetails.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
   },
   {
     path: '/firstloginpage',
@@ -118,7 +174,41 @@ const routes = [
   {
     path: '/user/jobdetails/:id',
     name: 'JobDetails',
-    component: () => import('../views/jobs/JobDetails.vue')
+    component: () => import('../views/jobs/JobDetails.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
+  },
+  {
+    path: '/savedjobs',
+    name: 'SavedJobs',
+    component: () => import('../components/user/SavedJobs.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
+  },
+  {
+    path: '/appliedjobs',
+    name: 'AppliedJobs',
+    component: () => import('../components/user/AppliedJobs.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    },
   }
 
 ]

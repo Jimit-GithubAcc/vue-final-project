@@ -1,5 +1,6 @@
 import axios from "axios";
-const BASE_URL = "https://bbea-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+// const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
     jobs: {
@@ -12,12 +13,21 @@ const state = {
         // skills: null
     },
     jobsArr: [],
+    searchTerm : ""
     // singleJob: {}
 }
 
 const getters = {
     getJobs(state){
         return state.jobsArr
+    },
+    getFilteredJobs: (state) => {
+        if (!state.searchTerm) return state.jobsArr;
+        return state.jobsArr.filter((job) => 
+            job.job_title?.includes(state.searchTerm.trim()) ||
+            job.location?.includes(state.searchTerm.trim()) ||
+            job.job_description?.includes(state.searchTerm.trim())
+        );
     },
     // getJob(state){
     //     return state.singleJob

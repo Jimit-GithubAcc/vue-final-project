@@ -3,7 +3,7 @@
     <div class="row align-items-center justify-content-center" style="min-height: calc(100vh-66px);margin: 8%;">
         <div class="col-lg-6 mx-auto">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
+                <input type="search" class="form-control" placeholder="Search Jobs by title,location or description" v-model="$store.state.jobs.searchTerm">
                 <span class="input-group-btn">
                     <button class="btn btn-success" type="button">Search</button>
                 </span>
@@ -39,7 +39,8 @@ export default {
         this.$router.push(`/createprofile/${id}`)
     },
     async getUserDetail(){
-      const response = await axios.get(`https://bbea-103-240-35-190.in.ngrok.io/member-data`)
+      // const response = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/member-data`)
+      const response = await axios.get('https://b55a-103-240-35-190.in.ngrok.io/member-data')
       // console.log("Member-Data = ",response.data)
       this.user.id = response.data.user.id
     }

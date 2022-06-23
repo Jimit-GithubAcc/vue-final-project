@@ -45,7 +45,8 @@ export default {
     },
     async getSingleJob(){
       const id = this.$route.params.id
-      const result = await axios.get(`https://bbea-103-240-35-190.in.ngrok.io/jobs/${id}`)
+      // const result = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/jobs/${id}`)
+      const result = await axios.get(`https://b55a-103-240-35-190.in.ngrok.io/jobs/${id}`)
       this.job = result.data.data
     }
   },

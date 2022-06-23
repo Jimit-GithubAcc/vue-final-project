@@ -1,5 +1,8 @@
 import axios from "axios";
-const BASE_URL = "https://bbea-103-240-35-190.in.ngrok.io/";
+// const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+// const BASE_URL = this.hostname;
+// import BASE_URL from '../../main'
 const state = {
     auth_token: null,
     user: {
@@ -102,12 +105,14 @@ const mutations = {
         state.auth_token = data.headers.authorization;
         axios.defaults.headers.common["Authorization"] = data.headers.authorization;
         localStorage.setItem("auth_token",data.headers.authorization);
+        localStorage.setItem("user_id",data.data.user.id);
         state.logged = true;
         state.user.id = data.data.user.id
     },
     setUserInfoFromToken(state, data) {
         state.user = data.data.user;
         state.auth_token = localStorage.getItem("auth_token");
+        state.user.id = localStorage.getItem("user_id");
         state.logged = true;
     },
     resetUserInfo(state){
@@ -118,6 +123,7 @@ const mutations = {
         };
         state.auth_token = null;
         localStorage.removeItem("auth_token");
+        localStorage.removeItem("user_id")
         axios.defaults.headers.common["Authorization"] = null;
         state.logged = false;
     },

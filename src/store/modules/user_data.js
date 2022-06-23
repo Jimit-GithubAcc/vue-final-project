@@ -1,10 +1,16 @@
 import axios from "axios";
-const BASE_URL = "https://bbea-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+// const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
     skills: [],
     userData: {
-        profile: {},
+        profile: {
+            name: null,
+            contact_number: null,
+            gender: null,
+            avatar: null,
+        },
         education: {
             school_name: null,
             degree: null,
@@ -39,9 +45,11 @@ const actions = {
     addProfile({ commit }, payload) {
         return new Promise((resolve, reject) => {
             axios
-                .patch(`${BASE_URL}user_details/1`, payload)
+                .patch(`${BASE_URL}user_details/${payload.id}`, payload, {
+                    headers: { 'Content-Type': 'multipart/form-data'}
+                })
                 .then((response) => {
-                    commit("setProfile", response);
+                    commit("setProfile", response.data);
                     console.log(response);
                     resolve(response);
                     this.$toast.success("User profile details added.", { timeout: 3000 });
