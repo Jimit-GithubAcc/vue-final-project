@@ -35,12 +35,26 @@
           >
         </b-nav-item-dropdown>
 
-        <b-navbar-nav tag="li" v-if="!isLoggedIn && checkCompanyLogin">
-          <b-nav-item to="/allcandidates">Candidates</b-nav-item>
-        </b-navbar-nav>
-        <b-navbar-nav tag="li" v-if="!isLoggedIn && checkCompanyLogin">
-          <b-nav-item to="/companyprofile">Profile for Employers</b-nav-item>
-        </b-navbar-nav>
+      <b-navbar-nav tag="li" v-if="!isLoggedIn && checkCompanyLogin">
+        <b-nav-item to="/allcandidates">Candidates</b-nav-item>
+      </b-navbar-nav>
+      <b-navbar-nav tag="li" v-if="!isLoggedIn && checkCompanyLogin">
+        <b-nav-item to="/companyprofile">Profile for Employers</b-nav-item>
+      </b-navbar-nav>
+
+      <b-navbar-nav tag="li" v-show="checkUserLogin">
+        <b-nav-item-dropdown text="My Jobs" toggle-class="text-white" right>
+          <b-dropdown-item to="/savedjobs">Saved Jobs</b-dropdown-item>
+          <b-dropdown-item to="/appliedjobs">Applied Jobs</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+
+      <b-navbar-nav tag="li">
+        <!-- <b-button style="color: black; background-color: white;" to="/login" v-show="!checkUserLogin">Login</b-button> -->
+        <b-nav-item-dropdown text="My Account" toggle-class="text-white" right v-show="checkUserLogin">
+          <b-dropdown-item :to="'/userprofile/' + this.user.id">Profile</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
 
         <b-navbar-nav tag="li" v-show="checkUserLogin">
           <b-nav-item-dropdown text="My Jobs" toggle-class="text-white" right>

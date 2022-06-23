@@ -187,7 +187,7 @@ export default {
   methods: {
     ...mapActions("userData",["getUserDetails"]),
     editProfile() {
-      this.$router.push(`/createprofile/${this.id}`);
+      this.$router.push('/editprofile/2');
     },
     // async getUserDetail(){
     //   // const response = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/member-data`)

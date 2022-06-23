@@ -6,7 +6,10 @@ const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
 
 const state = {
     jobs: null,
-    saveJobs: []
+    jobApply: null,
+    saveJobs: [],
+    cvsArr:[],
+    CVS:null,
 }
 
 const getters = {
