@@ -17,7 +17,7 @@
       </p>
       <p class="card-text" v-if="job.job_application_link"><b>Link : </b>{{job.job_application_link}}
       </p>
-     <p> <modal-apply :id="job.id"> </modal-apply> </p>
+                       <p> <modal-apply :id="job.id"> </modal-apply> </p>
      <!-- <b-button class="btn btn-success rounded-2" @click="applyForJob"> 
         Apply
       </b-button> -->

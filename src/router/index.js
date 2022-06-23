@@ -91,6 +91,19 @@ const routes = [
     }
   },
   {
+    path: '/editprofile/:id',
+    name: 'editProfileForm',
+    component: () => import('../components/userForm/editProfileForm.vue'),
+    beforeEnter: (_, __, next) => {
+      let token = window.localStorage.getItem('auth_token')
+      if(token !== null) {
+        next()
+      }else{
+        next("/firstloginpage")
+      }
+    }
+  },
+    {
     path: '/userprofile/:id',
     name: 'UserProfileDetails',
     component: () => import('../components/user/UserProfile.vue'),

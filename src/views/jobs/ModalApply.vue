@@ -7,7 +7,7 @@
       centered
       hide-footer
       title="Show Resume"
-      :size="getCVS.length ? 'lg' : ''"
+      :size="getCVS.length ? 'lg' :''"
     >
       <b-form @submit="onSubmit">
         <b-row class="mt-2 px-3">
@@ -85,7 +85,8 @@ export default {
                   this.showModal = false;
                   this.$toast.success("CV uploaded successfully.", { position: "top-right",timeout: 3000 });
                 }).catch((err) => {
-                     this.$toast.error(err.message,{ timeout : 3000 });
+                     console.log(err);
+                     this.$toast.error(err.response.data.message ,{ timeout : 3000 });
                   })
             
         },

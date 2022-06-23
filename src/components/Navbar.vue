@@ -32,7 +32,7 @@
       <b-navbar-nav tag="li">
         <!-- <b-button style="color: black; background-color: white;" to="/login" v-show="!checkUserLogin">Login</b-button> -->
         <b-nav-item-dropdown text="My Account" toggle-class="text-white" right v-show="checkUserLogin">
-          <b-dropdown-item :to="'/userprofile/' + user.id">Profile</b-dropdown-item>
+          <b-dropdown-item :to="'/userprofile/' + this.user.id">Profile</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
@@ -79,9 +79,7 @@ export default {
           return this.$store.getters['company_manager/isLoggedIn']
         }
     },
-    mounted() {
-      this.getUserDetail()
-    },
+    mounted() { this.getUserDetail(); },
     methods: {
         ...mapActions("session_manager",["logoutUser", "setLogin"]),
         logOut() {
@@ -96,7 +94,9 @@ export default {
         async getUserDetail(){
           const result = await axios.get('https://b55a-103-240-35-190.in.ngrok.io/member-data')
           this.user.id = result.data.user.id
-        }
+          console.log(this.user.id);
+          return this.user.id
+          }
     },
 };
 </script>

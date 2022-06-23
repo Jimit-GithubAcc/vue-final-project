@@ -175,7 +175,7 @@ export default {
   },
   methods: {
     editProfile() {
-      this.$router.push("/createprofile");
+      this.$router.push('/editprofile/2');
     },
   },
 };

@@ -10,6 +10,7 @@ const state = {
             contact_number: null,
             gender: null,
             avatar: null,
+            id:null,
         },
         education: {
             school_name: null,
@@ -30,6 +31,8 @@ const state = {
             description: null,
         },
     },
+    education:null,
+    experience:null
 };
 
 const getters = {
@@ -39,6 +42,9 @@ const getters = {
     getSkills(state) {
         return state.skills;
     },
+    getUserProfile(state) {
+        return state.userData.profile;
+    }
 };
 
 const actions = {
@@ -104,6 +110,17 @@ const actions = {
                 .catch((err) => reject(err));
         });
     },
+    fetchProfile({ commit },payload) {
+        new Promise((resolve, reject) => {
+            axios.get(`${BASE_URL}user_details/${payload.id}`)
+                .then((response) => {
+                    console.log(response.data.data.user_detail);
+                    commit("fetchUserProfile", response.data.data.user_detail);
+                    resolve(response);
+                })
+                .catch((err) => reject(err));
+        });
+    },
 };
 
 const mutations = {
@@ -119,8 +136,15 @@ const mutations = {
     setUserExperienceData(state, data) {
         state.userData.experience = data;
     },
+    fetchUserProfile(state,data){
+        state.userData.profile.name = data.name;
+        state.userData.profile.contact_number = data.contact_number;
+        state.userData.profile.gender = data.gender;
+        state.userData.profile.id = data.id;
+        state.userData.profile.avatar = data.avatar;        
+    }
     // getUserEducationData(state, data){
-    //     state.userData.experience = data
+    //     state.userData.experience = data 
     // }
 };
 

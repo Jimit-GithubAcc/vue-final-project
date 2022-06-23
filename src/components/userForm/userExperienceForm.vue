@@ -152,7 +152,7 @@ export default {
         start_date: "",
         end_date: "",
         description: "",
-        selectedempType: null
+        selectedempType:""
       },
     }
   },
