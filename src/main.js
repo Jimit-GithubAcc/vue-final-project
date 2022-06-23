@@ -21,6 +21,7 @@ if (cookieExists) {
   const auth_token = localStorage.getItem('auth_token')
   const authTokenExists = auth_token !== undefined && auth_token !== null
   if (authTokenExists) {
+    store.dispatch("company_manager/loginCompanyWithToken", {auth_token})
     store.dispatch("session_manager/loginUserWithToken", {auth_token})
   }
 }

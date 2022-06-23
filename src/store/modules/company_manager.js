@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
@@ -57,23 +57,7 @@ const actions = {
         })
     },
     logoutCompany({commit}){
-        const config = {
-            headers: {
-                authorization: state.auth_token
-            }
-        }
-        new Promise((resolve, reject) => {
-            axios.delete(`${BASE_URL}companies/sign_out`, config)
-            .then(() => {
-                console.log("Msg---")
-                commit("resetCompanyInfo")
-                resolve()
-            })
-            .catch((err) => {
-                console.log("Msg");
-                reject(err);
-            })
-        })
+        commit("resetCompanyInfo")
     },
     loginCompanyWithToken({commit}, payload){
         const config = {

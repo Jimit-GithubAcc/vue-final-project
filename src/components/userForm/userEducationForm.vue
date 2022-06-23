@@ -278,14 +278,16 @@ export default {
         console.log(this.$v.user);
         return;
       }
+      let endDate = new Date(this.user.end_date)
+      let startDate = new Date(this.user.start_date)
       let data = {
         user: {
           education:{
             school_name: this.user.sname,
             degree: this.user.degree,
             field_of_study: this.user.field,
-            start_date: this.user.start_date,
-            end_date: this.user.end_date,
+            start_date: startDate,
+            end_date: endDate,
             description: this.user.description,
             grade: this.user.grade
           }

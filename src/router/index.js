@@ -107,14 +107,16 @@ const routes = [
     path: '/companyprofile',
     name: 'Profile',
     component: () => import('../components/companyProfile/index.vue'),
-    beforeEnter: (_, __, next) => {
-      let token = window.localStorage.getItem('auth_token')
-      if(token !== null) {
-        next()
-      }else{
-        next("/firstloginpage")
-      }
-    }
+    // beforeEnter: (_, __, next) => {
+    //   let token = window.localStorage.getItem('auth_token')
+    //   if(token !== null) {
+    //     console.log("Token = ",token);
+    //     next()
+    //   }else{
+    //     console.log("Token Else= ", token)
+    //     next("/firstloginpage")
+    //   }
+    // }
     // meta: {auth: true}
   },
   {

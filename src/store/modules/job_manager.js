@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
@@ -13,6 +13,7 @@ const state = {
         // skills: null
     },
     jobsArr: [],
+    candidatesArr: [],
     searchTerm : ""
     // singleJob: {}
 }
@@ -29,6 +30,9 @@ const getters = {
             job.job_description?.includes(state.searchTerm.trim())
         );
     },
+    getAllCandidates : (state) => {
+        return state.candidatesArr
+    }
     // getJob(state){
     //     return state.singleJob
     // }
@@ -41,6 +45,9 @@ const mutations = {
     getJobData(state, data){
         state.jobsArr = data
     },
+    getCandidatesData(state, data){
+        state.candidatesArr = data
+    }
     // getSingleJobData(state, data){
     //     state.singleJob = data
     // }
@@ -68,6 +75,11 @@ const actions = {
         console.log('JobData = ',response.data.data)
         commit("getJobData", response.data.data)
     },
+    async getCandidates({commit}){
+        const response = await axios.get(`${BASE_URL}company/all_applications`)
+        console.log(response.data)
+        commit("getCandidatesData", response.data)
+    }
     // async getSingleJob({commit}, id){
     //     const response = await axios.get(`${BASE_URL}jobs/${id}`)
     //     console.log("Job = ", response)

@@ -30,7 +30,7 @@
           <b-dropdown-item> Internship </b-dropdown-item>
       </b-dropdown>
     </b-input-group> -->
-    <b-form-select v-model="$v.user.selectedempType.$model" :state="validateState('selectedempType')" class="mt-3 mr-sm-2 mb-sm- form-control" :options="options">
+    <b-form-select v-model="user.selectedempType" :state="validateState('selectedempType')" class="mt-3 mr-sm-2 mb-sm- form-control" :options="options">
     </b-form-select>
     <b-form-invalid-feedback
             id="input-1-live-feedback"
@@ -85,12 +85,13 @@
       id="inline-form-input-name"
       class="mr-sm-2 mb-sm-0"
       type="date"
+      v-model="user.start_date"
     ></b-form-input>
   </b-col>
   
   <b-col>
     <b-input-group  class="mr-sm-2 mb-sm-0">
-     <b-form-input id="inline-form-input-username" placeholder="End date" type="date"></b-form-input>
+     <b-form-input id="inline-form-input-username" v-model="user.end_date" placeholder="End date" type="date" :min="minDate"></b-form-input>
     </b-input-group>
    </b-col>
 
@@ -152,7 +153,7 @@ export default {
         start_date: "",
         end_date: "",
         description: "",
-        selectedempType: null
+        selectedempType: ""
       },
     }
   },
@@ -175,6 +176,21 @@ export default {
         required,
       },
     },
+  },
+  computed: {
+    minDate(){
+          console.log(this.user.start_date);
+          let d = new Date(this.user.start_date);
+            let p1 = d.getFullYear()
+            let p2 = d.getMonth()
+            let p3 = d.getDate() 
+            if(p2<10){ p2 = "0" + p2; }
+            if(p3<10){ p3 = "0" + p3; }  
+
+          var min = (p1 + 1) + "-" + p2 + "-" + p3
+           console.log(min)
+          return min;
+       }
   },
   methods: {
     ...mapActions("userData",["addUserExperienceData"]),
@@ -203,16 +219,18 @@ export default {
         this.$toast.error("Please enter experience details properly.",{ timeout : 3000 });
         return;
       }
+      let startDate = new Date(this.user.start_date)
+      let endDate = new Date(this.user.end_date)
       let data = {
         user: {
           experience:{
             title: this.user.jobName,
             company_name: this.user.companyName,
             location: this.user.location,
-            start_date: this.user.start_date,
-            end_date: this.user.end_date,
+            start_date: startDate,
+            end_date: endDate,
             description: this.user.description,
-            employment_type: this.user.employmentType
+            employment_type: this.user.selectedempType
           }
         }
       }

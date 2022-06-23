@@ -1,25 +1,27 @@
 <template>
     <b-container>
-        <div class="mt-3">
+        <div class="mt-5">
             <h1 class="">Job Categories</h1>
         </div>
         <div>
-            <p>Discover Jobs according to your skills.</p>
+            <h3>Discover Jobs according to your skills.</h3>
         </div>
         <b-card-group deck class="jobcard">
-      <b-card class="jobcard__col" v-for="i in 10" :key="i">
+      <b-card class="jobcard__col" v-for="job in getJobs" :key="job.id">
         <b-card-text class="jobcard__text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio adipisci voluptatem est? Qui tempora eos et velit voluptate, eveniet id ratione a autem nam, veritatis nesciunt maxime quasi sunt similique!
+          {{job.job_description}}
         </b-card-text>
-        
       </b-card>
     </b-card-group>
     </b-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-        
+    computed: {
+      ...mapGetters("jobs", ["getJobs"]),
+    },
 }
 </script>
 

@@ -17,7 +17,7 @@
               <p class="text-muted mb-1"><b>Job Description : </b>{{job.job.job_description}}</p>
               <p class="text-muted mb-1"><b>Job Location : </b>{{job.job.location}}</p>
               <p class="text-muted mb-4"><b>Last Date to apply : </b>{{job.job.last_date_to_apply}}</p>
-              <b-button variant="outline-primary"
+              <b-button variant="outline-primary" @click="applyForJob(job.job.id)"
                 >Apply for this job</b-button
               >
             </div>
@@ -42,6 +42,9 @@ export default {
   },
   methods: {
     ...mapActions("userjob", ["getSaveJob"]),
+    applyForJob(id){
+      this.$router.push(`/user/jobdetails/${id}`)
+    }
   },
   mounted() {
     this.getSaveJob();

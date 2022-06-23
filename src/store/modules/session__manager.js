@@ -1,6 +1,6 @@
 import axios from "axios";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
-const BASE_URL = "https://b55a-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
 // const BASE_URL = this.hostname;
 // import BASE_URL from '../../main'
 const state = {

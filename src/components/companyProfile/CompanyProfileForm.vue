@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Profile Page</h1>
-    <b-button @click="logOutCompany">Logout Company</b-button>
     <b-container
       class="mt-4"
       style="
@@ -275,7 +274,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions("company_manager", ["logoutCompany"]),
     ...mapActions("companyData", ["addCompanyData"]),
     validateState(name) {
       const { $dirty, $error } = this.$v.company[name];
@@ -353,7 +351,7 @@ export default {
           .then((success) => {
             console.log(success);
             this.resetForm();
-            this.$router.push("/");
+            this.$router.push("/companyprofile/profiledetails");
             this.$toast.success("company details added successfully.", {
               timeout: 3000,
             });
@@ -363,11 +361,6 @@ export default {
             this.$toast.error("Some error occurred", { timeout: 3000 });
           });
       }
-    },
-    logOutCompany() {
-      this.logoutCompany();
-      this.$router.push("/firstloginpage");
-      this.$toast.success("Logout successfull", { timeout: 3000 });
     },
   },
 };

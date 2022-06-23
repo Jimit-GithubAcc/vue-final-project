@@ -14,7 +14,7 @@
               <h4 class="my-3">Candidate Name</h4>
               <p class="text-muted mb-1">Full Stack Developer</p>
               <p class="text-muted mb-4">Location</p>
-              <b-button variant="outline-primary" @click="editProfile"
+              <b-button variant="outline-primary" @click="editProfile(id)" v-if="checkUserLogin"
                 >Edit Profile</b-button
               >
             </div>
@@ -162,21 +162,39 @@
 </template>
 
 <script>
+// import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data() {
     return {
       isExperience: true,
+      id : null
     };
   },
   computed: {
+    ...mapGetters("session_manager",["isLoggedIn"]),
+          checkUserLogin(){
+            console.log("is User LoggedIn = ", this.isLoggedIn)
+            return this.isLoggedIn
+          },
     showExperience(){
         return this.isExperience === true ? 'col-md-6' : 'col-md-12'
     }
   },
+  mounted() {
+    this.getUserDetails()
+  },
   methods: {
+    ...mapActions("userData",["getUserDetails"]),
     editProfile() {
-      this.$router.push("/createprofile");
+      this.$router.push(`/createprofile/${this.id}`);
     },
+    // async getUserDetail(){
+    //   // const response = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/member-data`)
+    //   const response = await axios.get('https://6253-103-240-35-190.in.ngrok.io/member-data')
+    //   // console.log("Member-Data = ",response.data)
+    //   this.id = response.data.user.id
+    // }
   },
 };
 </script>

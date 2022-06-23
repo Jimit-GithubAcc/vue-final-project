@@ -265,7 +265,7 @@ export default {
         this.resetForm()
         this.$toast.success("Job posted successfully.",{ timeout : 3000 });
         // console.log(this.user);
-        this.$router.push("/");
+        this.$router.push("/companyprofile/jobdetails");
       }).catch(error => {
         console.log(error);
         this.$toast.error("Some Error Occured",{ timeout : 3000 });
