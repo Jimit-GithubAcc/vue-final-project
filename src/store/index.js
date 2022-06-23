@@ -18,7 +18,7 @@ export default new Vuex.Store({
   },
   modules: {
     session_manager,
-    company_manager,
+   company_manager,
     "userData" :user_data,
     "jobs": job_manager,
     "userjob": user_job_manager,

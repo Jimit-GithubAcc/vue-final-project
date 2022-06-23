@@ -1,6 +1,6 @@
 <template>
   <div class="card mx-auto main__card" style="width: 40rem">
-
+    
     <div class="card-body bg-info">
       <h3 class="card-title">{{job.job_title}}</h3>
 
@@ -17,17 +17,17 @@
       </p>
       <p class="card-text" v-if="job.job_application_link"><b>Link : </b>{{job.job_application_link}}
       </p>
-
-      <b-button class="btn btn-success rounded-2" @click="applyForJob">
+     <p> <modal-apply :id="job.id"> </modal-apply> </p>
+     <!-- <b-button class="btn btn-success rounded-2" @click="applyForJob"> 
         Apply
-      </b-button>
+      </b-button> -->
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import ModalApply from './ModalApply.vue';
 // import { mapActions, mapGetters } from 'vuex';
 export default {
   data() {
@@ -35,6 +35,7 @@ export default {
       job: {}
     }
   },
+  components: { ModalApply },
   computed : {
     // ...mapGetters("jobs",["getJob"])
   },

@@ -41,7 +41,7 @@ export default {
       this.saveJob(id)
         .then((response) => {
           console.log(response);
-          // this.$toast.success(, { timeout: 3000 });
+          this.$toast.success("Job details added",{ timeout : 3000 });
         })
         .catch((err) => {
           this.$toast.error(err.message, { timeout: 3000 });

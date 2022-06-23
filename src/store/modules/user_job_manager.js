@@ -15,6 +15,9 @@ const getters = {
     },
     viewAllSavedJobs(state){
         return state.saveJobs
+    },
+    getCVS(state){
+        return state.cvsArr
     }
 }
 
@@ -24,6 +27,15 @@ const mutations = {
     },
     viewAllJobs(state, jobs){
         state.saveJobs = jobs
+    },
+    addCVS(state,CVS){
+        state.CVS = CVS
+    },
+    getCVSdata(state,data){
+        state.cvsArr = data
+    },
+    applyJob(state,data){
+        state.jobApply = data
     }
 }
 
@@ -49,7 +61,50 @@ const actions = {
         const response = await axios.get(`${BASE_URL}save_jobs`)
         console.log("Saved Jobs = ", response.data.data)
         commit("viewAllJobs", response.data.data)
-    }
+    },
+    addCVS({commit},payload){
+        return new Promise((resolve, reject) => {
+            axios.patch(`${BASE_URL}user_cv/add_cv`,payload,{
+                headers: { 'Content-Type': 'multipart/form-data'}
+            })
+            .then((response) => {
+                if(response.status === 200){
+                    console.log(response);
+                    commit("addCVS", response.data)
+                    resolve(true)
+                    this.$toast.success("CV uploaded successfully",{ timeout : 3000 });
+                }
+            })
+            .catch((err) => {
+                reject(err)
+                this.$toast.error(err.message,{ timeout : 3000 });
+            })
+        })
+    },
+    async getCVSdata({commit}){
+        //let token = window.localStorage.getItem("auth_token");
+        const response = await axios.get(`${BASE_URL}user_cv/show_all_cv`)
+        console.log('JobData = ',response.data)
+        commit("getCVSdata", response.data.data)
+    },
+    applyJob({commit},payload){
+        return new Promise((resolve, reject) => {
+            axios.post(`${BASE_URL}user/job_applications`,payload)
+            .then((response) => {
+                if(response.status === 200){
+                    console.log(response);
+                    commit("applyJob", response.data)
+                    resolve(true)
+                    this.$toast.success("job applied successfully",{ timeout : 3000 });
+                }
+            })
+            .catch((err) => {
+                reject(err)
+                this.$toast.error(err.message,{ timeout : 3000 });
+            })
+        })
+    },
+
 }
 
 export default{
