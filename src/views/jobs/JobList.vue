@@ -13,7 +13,7 @@
           {{job.location}}
         </b-card-text>
         <b-button variant="success" @click="redirectToJobDetail(job.id)">Apply Now</b-button>
-        <b-button variant="primary" class="m-2" @click="saveJob(job.id)">Save Job</b-button>
+        <b-button variant="primary" class="m-2" @click="savingJob(job.id)">Save Job</b-button>
       </b-card>
     </b-card-group>
   </b-container>
@@ -29,6 +29,14 @@ export default {
   methods: {
     ...mapActions("jobs",["getJob"]),
     ...mapActions("userjob",["saveJob"]),
+     savingJob(id){
+       this.saveJob(id).then((success) => { 
+                  console.log(success)
+                  this.$toast.success("Job details added",{ timeout : 3000 });
+                }).catch((err) => {
+                     this.$toast.error(err.message,{ timeout : 3000 });
+            })
+        },
     redirectToJobDetail(id){
       this.$router.push(`/user/jobdetails/${id}`)
     }

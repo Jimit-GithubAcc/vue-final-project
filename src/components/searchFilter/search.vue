@@ -39,7 +39,7 @@ export default {
         this.$router.push(`/createprofile/${id}`)
     },
     async getUserDetail(){
-      const response = await axios.get(`https://bbea-103-240-35-190.in.ngrok.io/member-data`)
+      const response = await axios.get(`https://7a49-103-240-35-190.in.ngrok.io/member-data`)
       // console.log("Member-Data = ",response.data)
       this.user.id = response.data.user.id
     }

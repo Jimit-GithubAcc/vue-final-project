@@ -96,16 +96,17 @@
 
 <script>
 // import axios from 'axios';
-
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
       showModal: false,
-      file: "",
+      file: null,
       filelist: [],
     };
   },
   methods: {
+    ...mapActions("userjob",["addCVS"]),
     uploadResume() {
       this.showModal = true;
     },
@@ -119,14 +120,23 @@ export default {
           timeout: 3000,
         });
       }else{
-        this.showModal = false;
-        this.$toast.success("CV uploaded successfully.", {
-          position: "top-right",
-          timeout: 3000,
-        });
-      }
-    },
-    onChange(event) {
+           let data = {
+               payload :{
+                  title: this.filelist[0].fileName,
+                  is_default: true,
+                  cv: this.filelist[0].file   
+              } 
+           }
+        this.addCVS(data.payload).then((success) => { 
+                  console.log(success)
+                  this.showModal = false;
+                  this.$toast.success("CV uploaded successfully.", { position: "top-right",timeout: 3000 });
+                }).catch((err) => {
+                     this.$toast.error(err.message,{ timeout : 3000 });
+                  })
+            }
+        },
+  onChange(event) {
       const fileArray = [...event.target.files];
       fileArray.forEach((file) => {
         const fileName = file.name.replace(/\.[^/.]+$/, "");
@@ -140,8 +150,9 @@ export default {
         ) {
           if (!this.filelist.length) {
             this.filelist.push({ fileName, extension, file });
+            
           } else if (this.filelist.length === 1) {
-            this.filelist.splice(0, 1, { fileName, extension, file });
+            this.filelist.splice(0, 1, { fileName, extension,file });
             console.log(this.filelist);
           }
         } else {
