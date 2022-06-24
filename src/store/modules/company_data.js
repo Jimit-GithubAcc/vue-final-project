@@ -44,8 +44,9 @@ const actions = {
     },
     editCompanyData({commit}, payload){
         return new Promise((resolve, reject) => {
-            axios.patch(`${BASE_URL}company/company_details`, payload)
-            .then((response) => {
+            axios.patch(`${BASE_URL}company/company_details`, payload,{
+                    headers: { 'Content-Type': 'multipart/form-data'}
+                }).then((response) => {
                 if (response.status === 200) {
                     commit("setCompanyData", response.data);
                     resolve(true);

@@ -18,9 +18,9 @@
               id="inline-form-input-name"
               class="mt-3 mr-sm-2 mb-sm-0"
               placeholder="Organization Name"
-              required
               v-model="companyData.name"
-            ></b-form-input>
+              required></b-form-input>
+
           </b-col>
           <b-col>
             <b-input-group class="mt-3 mr-sm-2 mb-sm-0">
@@ -167,19 +167,19 @@
 </template>
 
 <script>
-import axios from 'axios';
-// import { mapActions } from "vuex";
+import { mapActions } from "vuex";
 export default {
-    props: ["companyData"],
-  data() {
+    data() {
     return {
     //   company: this.companyData
     };
   },
+  props: ["companyData"],
   mounted(){
 
   },
   methods: {
+    ...mapActions("companyData",["editCompanyData"]),
     updateCompanyDetails(){    
         if (!this.companyData.logo) {
         this.$toast.error("Please add a valid logo.", { timeout: 3000 });
@@ -196,26 +196,28 @@ export default {
           phone: this.companyData.phone,
           logo: this.companyData.logo,
           banner: this.companyData.banner,
-          images: this.companyData.images,
-          address: {
-              street: this.companyData.address.street,
-              area: this.companyData.address.area,
-              city: this.companyData.address.city,
-              country: this.companyData.address.country,
-              pincode: this.companyData.address.pincode,
-              state: this.companyData.address.state,
-          }
+          company_street: this.companyData.address.street,
+          company_area: this.companyData.address.area,
+          company_city: this.companyData.address.city,
+          company_country: this.companyData.address.country,
+          company_pincode: this.companyData.address.pincode,
+          company_state: this.companyData.address.state,
+          
             // }
         }
-        return new Promise((resolve, reject) => {
-            axios.patch(`https://c9de-103-240-35-190.in.ngrok.io/company/company_details`, data)
-                .then(response => {
-                    console.log(response);
-                    resolve(response);
-                }).catch(err => {
-                    reject(err)
-                });
-        })
+        this.editCompanyData(data).then((success) => {
+            console.log(success);
+            this.resetForm();
+            this.$router.push("/companyprofile/profiledetails");
+            this.$toast.success("company details edited successfully.", {
+              timeout: 3000,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$toast.error("Some error occurred", { timeout: 3000 });
+          });
+        
     },
     addLogo(e) {
       var files = e.target.files || e.dataTransfer.files;
