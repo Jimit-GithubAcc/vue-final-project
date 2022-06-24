@@ -1,34 +1,35 @@
 <template>
     <div>
       <company-profile-form></company-profile-form>
-      <!-- <edit-company-profile :companyData="companyData"></edit-company-profile> -->
+      <edit-company-profile :allCompanyData="allCompanyData"></edit-company-profile>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState } from 'vuex'
 import CompanyProfileForm from './CompanyProfileForm.vue'
-// import EditCompanyProfile from './EditCompanyProfile.vue'
+import EditCompanyProfile from './EditCompanyProfile.vue'
 export default {
   components: { 
     CompanyProfileForm, 
-    // EditCompanyProfile 
+    EditCompanyProfile 
     },
-  data() {
-    return {
-      companyData: {}
-    }
-  },  
-  methods: {
-    async getProfileDetails(){
-      const response = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/company/company_details`)
-      this.companyData = response.data.data
-      console.log("Company Data = ",response.data.data)
-    }  
-  },
-  mounted() {
-    this.getProfileDetails()
-  }
+    data() {
+      return {
+        companyData: null
+      }
+    },
+    computed: {
+      ...mapState("companyData",["allCompanyData"])
+    },
+    methods: {
+      ...mapState("companyData",["fetchCompanyProfileData"])
+    },
+    mounted() {
+      this.fetchCompanyProfileData()
+      this.companyData = this.allCompanyData
+      console.log("companyData = ",this.companyData);
+    } 
 }
 </script>
 <style scoped>
