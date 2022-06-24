@@ -167,7 +167,7 @@ export default {
     },
     methods: {
       async viewSingleCandidate(){
-      const response = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/company/show_user_profile/${this.$route.params.id}`);
+      const response = await axios.get(`https://job-portal-rails.herokuapp.com/company/show_user_profile/${this.$route.params.id}`);
       this.user = response.data
       console.log("Response = ",response.data);
       }

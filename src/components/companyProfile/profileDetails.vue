@@ -120,7 +120,7 @@ export default {
   methods: {
     async getCompanyData() {
       const result = await axios.get(
-        `https://c9de-103-240-35-190.in.ngrok.io/company/company_details`
+        `https://job-portal-rails.herokuapp.com/company/company_details`
       );
       console.log(result.data.data);
       this.companyData = result.data.data;

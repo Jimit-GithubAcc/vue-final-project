@@ -188,7 +188,7 @@ export default {
     },
     async getUserDetails() {
       const response = await axios.get(
-        `https://c9de-103-240-35-190.in.ngrok.io/user_details/${this.$route.params.id}`
+        `https://job-portal-rails.herokuapp.com/user_details/${this.$route.params.id}`
       );
       this.user = response.data.data;
       console.log(response.data.data);

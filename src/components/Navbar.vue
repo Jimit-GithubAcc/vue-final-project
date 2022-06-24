@@ -130,7 +130,7 @@ export default {
     },
     async getUserDetail() {
       const result = await axios.get(
-        "https://c9de-103-240-35-190.in.ngrok.io/member-data"
+        "https://job-portal-rails.herokuapp.com/member-data"
       );
       this.user.id = result.data.user.id;
     },

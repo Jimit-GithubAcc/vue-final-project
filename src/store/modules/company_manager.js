@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://c9de-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://job-portal-rails.herokuapp.com/";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
