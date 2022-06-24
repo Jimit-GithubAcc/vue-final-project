@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async getCompanyData() {
-      const result = await axios.get(`https://6253-103-240-35-190.in.ngrok.io/company/company_details`)
+      const result = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/company/company_details`)
       console.log(result.data.data)
       this.companyData = result.data.data
     }

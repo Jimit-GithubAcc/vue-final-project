@@ -7,10 +7,8 @@
       <p class="card-text"><b>Description : </b>
         {{job.job_description}}
       </p>
-      <p class="card-text"><b>Location : </b> {{job.location}}
-      </p>
-      <p class="card-text"><b>Skills Required : </b>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, qui.
-      </p>
+      <p v-if="job.company_detail"><b>Company : </b>{{job.company_detail.name}}</p>
+      <p class="card-text"><b>Location : </b> {{job.location}}</p>
       <p class="card-text"><b>Experience needed : </b>{{job.year_of_exp}}
       </p>
       <p class="card-text"><b>Last Date to Apply : </b>{{job.last_date_to_apply}}
@@ -47,7 +45,7 @@ export default {
     async getSingleJob(){
       const id = this.$route.params.id
       // const result = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/jobs/${id}`)
-      const result = await axios.get(`https://6253-103-240-35-190.in.ngrok.io/jobs/${id}`)
+      const result = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/jobs/${id}`)
       this.job = result.data.data
     }
   },

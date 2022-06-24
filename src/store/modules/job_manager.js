@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://c9de-103-240-35-190.in.ngrok.io/";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
@@ -14,7 +14,8 @@ const state = {
     },
     jobsArr: [],
     candidatesArr: [],
-    searchTerm : ""
+    searchTerm : "",
+    appliedJobsArr: [],
     // singleJob: {}
 }
 
@@ -32,6 +33,9 @@ const getters = {
     },
     getAllCandidates : (state) => {
         return state.candidatesArr
+    },
+    getAllAppliedJobs : (state) => {
+        return state.appliedJobsArr
     }
     // getJob(state){
     //     return state.singleJob
@@ -47,6 +51,9 @@ const mutations = {
     },
     getCandidatesData(state, data){
         state.candidatesArr = data
+    },
+    getAppliedJobs(state, data){
+        state.appliedJobsArr = data
     }
     // getSingleJobData(state, data){
     //     state.singleJob = data
@@ -79,6 +86,11 @@ const actions = {
         const response = await axios.get(`${BASE_URL}company/all_applications`)
         console.log(response.data)
         commit("getCandidatesData", response.data)
+    },
+    async getAppliedJobsData({commit}){
+        const response = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/user/job_applications/my_job_application`)
+        console.log(response.data)
+        commit("getAppliedJobs", response.data)
     }
     // async getSingleJob({commit}, id){
     //     const response = await axios.get(`${BASE_URL}jobs/${id}`)

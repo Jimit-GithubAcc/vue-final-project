@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://6253-103-240-35-190.in.ngrok.io/";
+const BASE_URL = "https://c9de-103-240-35-190.in.ngrok.io/";
 // const BASE_URL = "https://f129-103-240-35-190.in.ngrok.io/";
 
 const state = {
@@ -110,11 +110,11 @@ const actions = {
                 .catch((err) => reject(err));
         });
     },
-    async getUserDetails({commit}, id){
-        const response = await axios.get(`${BASE_URL}user_details/${id}`)
-        commit("getUserData", response.data)
-        console.log(response);
-    },
+    // async getUserDetails({commit}, id){
+    //     const response = await axios.get(`${BASE_URL}user_details/${id}`)
+    //     commit("getUserData", response.data)
+    //     console.log(response.data.data);
+    // },
     fetchProfile({ commit },payload) {
         new Promise((resolve, reject) => {
             axios.get(`${BASE_URL}user_details/${payload.id}`)

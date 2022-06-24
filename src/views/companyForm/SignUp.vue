@@ -204,7 +204,7 @@ export default {
         console.log(success);
         this.resetForm();
         this.$toast.success("Employeer registration successful",{ timeout : 3000 });
-        this.$router.push("/employerlogin")
+        this.$router.push("/companyprofile")
       }).catch((error) => {
         console.log(error)
         this.$toast.error("User Already exists",{ timeout : 3000 });

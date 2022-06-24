@@ -13,8 +13,9 @@
           >
         </div>
         <b-card-text class="jobcard__text">
-          <p>{{ job.job_description }}</p>
-          {{ job.location }}
+          <p><b>Description : </b>{{ job.job_description }}</p>
+          <p v-if="job.company_detail">{{job.company_detail.name}}</p>
+          <p><b>Location : </b>{{ job.location }}</p>
         </b-card-text>
         <b-button variant="success" @click="redirectToJobDetail(job.id)"
           >Apply Now</b-button

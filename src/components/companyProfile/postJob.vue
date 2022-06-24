@@ -249,7 +249,7 @@ export default {
         console.log(this.$v.company);
         return;
       }
-      let lastDate = new Date(this.company.date)
+      let lastDate = new Date(this.company.lastDate)
       let data = {
         company:{
           job_description: this.company.jobDescription,

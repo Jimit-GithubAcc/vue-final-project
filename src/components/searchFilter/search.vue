@@ -40,7 +40,7 @@ export default {
     },
     async getUserDetail(){
       // const response = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/member-data`)
-      const response = await axios.get('https://6253-103-240-35-190.in.ngrok.io/member-data')
+      const response = await axios.get('https://c9de-103-240-35-190.in.ngrok.io/member-data')
       // console.log("Member-Data = ",response.data)
       this.user.id = response.data.user.id
     }

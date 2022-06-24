@@ -82,11 +82,11 @@ export default {
            }
         this.applyJob(data.payload).then((success) => { 
                   console.log(success)
+                  this.$toast.success("applied successfully.", { timeout: 3000 });
                   this.showModal = false;
-                  this.$toast.success("CV uploaded successfully.", { position: "top-right",timeout: 3000 });
                 }).catch((err) => {
                      console.log(err);
-                     this.$toast.error(err.response.data.message ,{ timeout : 3000 });
+                     this.$toast.error("Something wrong" ,{ timeout : 3000 });
                   })
             
         },

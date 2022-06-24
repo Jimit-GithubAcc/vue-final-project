@@ -11,17 +11,21 @@
                 class="rounded-circle img-fluid"
                 style="width: 150px"
               />
-              <h4 class="my-3">Candidate Name</h4>
-              <p class="text-muted mb-1">Full Stack Developer</p>
-              <p class="text-muted mb-4">Location</p>
-              <b-button variant="outline-primary" @click="editProfile(id)" v-if="checkUserLogin"
+              <h4 class="my-3">{{ user.user_detail.name }}</h4>
+              <p class="text-muted mb-4">{{ user.email }}</p>
+              <p class="text-muted mb-1">
+                {{ user.user_detail.contact_number }}
+              </p>
+              <b-button
+                variant="outline-primary"
+                @click="editProfile(user.id)"
+                v-if="checkUserLogin"
                 >Edit Profile</b-button
               >
             </div>
           </div>
 
-          <!--Experience Info-->
-          <div class="card mb-4 mb-lg-0">
+          <div class="card mb-4 mb-lg-0" v-if="user.skill.length !== 0">
             <div class="card-body p-2">
               <h5 class="mb-4">
                 <span class="text-primary font-weight-bold me-1">Skills</span>
@@ -39,7 +43,6 @@
           </div>
         </div>
 
-        <!--Candidate Info-->
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body">
@@ -48,7 +51,7 @@
                   <p class="mb-0">Full Name</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">Candidate Name</p>
+                  <p class="text-muted mb-0">{{ user.user_detail.name }}</p>
                 </div>
               </div>
               <hr />
@@ -57,7 +60,7 @@
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">example@example.com</p>
+                  <p class="text-muted mb-0">{{ user.email }}</p>
                 </div>
               </div>
               <hr />
@@ -66,68 +69,61 @@
                   <p class="mb-0">Phone</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">(097) 234-5678</p>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Mobile</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">(098) 765-4321</p>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
                   <p class="text-muted mb-0">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Officiis, esse!
+                    {{ user.user_detail.contact_number }}
                   </p>
                 </div>
               </div>
+              <hr />
             </div>
           </div>
 
-          <!--Candidate Skills-->
           <div class="row">
-            <div class="col-md-6" v-if="isExperience">
+            <div class="col-md-6" v-if="user.experiences.length !== 0">
               <div class="card mb-4 mb-md-0">
                 <div class="card-body">
                   <h5 class="mb-3">
                     <span class="text-primary font-weight-bold me-1"
-                      >Experience - 3 Years</span
+                      >Experience</span
                     >
                   </h5>
-                  <p class="mb-1 mt-4">
-                    <b>Job Name : </b>Lorem ipsum dolor, sit amet
-                  </p>
 
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Company Name : </b>Lorem ipsum dolor, sit amet
-                  </p>
+                  <div v-for="exp in user.experiences" :key="exp.id">
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Job Name : </b>{{ exp.title }}
+                    </p>
 
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Location : </b>Lorem ipsum dolor, sit ametconsectetur
-                    adipisicing elit. Ducimus, itaque!
-                  </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Company Name : </b>{{ exp.company_name }}
+                    </p>
 
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Start Date : </b>{{ new Date() }}
-                  </p>
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>End Date : </b>{{ new Date() }}
-                  </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Description : </b>{{ exp.description }}
+                    </p>
+
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Employment Type : </b>{{ exp.employment_type }}
+                    </p>
+
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Location : </b>{{ exp.location }}
+                    </p>
+
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Start Date : </b>{{ exp.start_date }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>End Date : </b>{{ exp.end_date }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!--Education Details-->
-            <div class="col-md-6" :class="showExperience">
+            <div
+              class="col-md-4"
+              :class="user.experiences.length ? 'col-md-6' : 'col-md-12'"
+            >
               <div class="card mb-4 mb-md-0">
                 <div class="card-body">
                   <h5 class="mb-4">
@@ -135,22 +131,26 @@
                       >Education Details</span
                     >
                   </h5>
-                  <p class="mb-1" style="font-size: 0.9rem">
-                    <b>University Name : </b>Lorem ipsum dolor, sit amet
-                    consectetur adipisicing elit. Ducimus, itaque!
-                  </p>
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Field : </b>Lorem ipsum dolor sit amet.
-                  </p>
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Grade : </b>9 CGPA
-                  </p>
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>Start Date : </b>{{ new Date() }}
-                  </p>
-                  <p class="mt-4 mb-1" style="font-size: 0.9rem">
-                    <b>End Date : </b>{{ new Date() }}
-                  </p>
+                  <div v-for="edu in user.educations" :key="edu.id">
+                    <p class="mb-1" style="font-size: 0.9rem">
+                      <b>University Name : </b>{{ edu.school_name }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Degree : </b>{{ edu.degree }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Grade : </b>{{ edu.grade }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Start Date : </b>{{ edu.start_date }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>End Date : </b>{{ edu.end_date }}
+                    </p>
+                    <p class="mt-4 mb-1" style="font-size: 0.9rem">
+                      <b>Description : </b>{{ edu.description }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,39 +162,37 @@
 </template>
 
 <script>
-// import axios from 'axios';
-import { mapActions, mapGetters } from 'vuex';
+import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      isExperience: true,
-      id : null
+      id: null,
+      user: {},
     };
   },
   computed: {
-    ...mapGetters("session_manager",["isLoggedIn"]),
-          checkUserLogin(){
-            console.log("is User LoggedIn = ", this.isLoggedIn)
-            return this.isLoggedIn
-          },
-    showExperience(){
-        return this.isExperience === true ? 'col-md-6' : 'col-md-12'
-    }
+    ...mapGetters("session_manager", ["isLoggedIn", "getUserID"]),
+    checkUserLogin() {
+      console.log("is User LoggedIn = ", this.isLoggedIn);
+      return this.isLoggedIn;
+    },
   },
   mounted() {
-    this.getUserDetails()
+    this.getUserDetails();
   },
   methods: {
-    ...mapActions("userData",["getUserDetails"]),
+    // ...mapActions("userData",["getUserDetails"]),
     editProfile() {
-      this.$router.push('/editprofile/2');
+      this.$router.push("/editprofile/" + this.getUserID);
     },
-    // async getUserDetail(){
-    //   // const response = await axios.get(`https://f129-103-240-35-190.in.ngrok.io/member-data`)
-    //   const response = await axios.get('https://6253-103-240-35-190.in.ngrok.io/member-data')
-    //   // console.log("Member-Data = ",response.data)
-    //   this.id = response.data.user.id
-    // }
+    async getUserDetails() {
+      const response = await axios.get(
+        `https://c9de-103-240-35-190.in.ngrok.io/user_details/${this.$route.params.id}`
+      );
+      this.user = response.data.data;
+      console.log(response.data.data);
+    },
   },
 };
 </script>

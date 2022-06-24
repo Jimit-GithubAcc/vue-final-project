@@ -200,7 +200,7 @@ export default {
       this.registerUser(data);
       this.resetForm();
       this.$toast.success("User registration successful",{ timeout : 3000 });
-      this.$router.push("/login")
+      this.$router.push("/")
     },
     
   },

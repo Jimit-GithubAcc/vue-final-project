@@ -45,23 +45,9 @@
       <b-navbar-nav tag="li" v-show="checkUserLogin">
         <b-nav-item-dropdown text="My Jobs" toggle-class="text-white" right>
           <b-dropdown-item to="/savedjobs">Saved Jobs</b-dropdown-item>
-          <b-dropdown-item to="/appliedjobs">Applied Jobs</b-dropdown-item>
+          <b-dropdown-item @click="goToAppliedJobs">Applied Jobs</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-
-      <b-navbar-nav tag="li">
-        <!-- <b-button style="color: black; background-color: white;" to="/login" v-show="!checkUserLogin">Login</b-button> -->
-        <b-nav-item-dropdown text="My Account" toggle-class="text-white" right v-show="checkUserLogin">
-          <b-dropdown-item :to="'/userprofile/' + this.user.id">Profile</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-
-        <b-navbar-nav tag="li" v-show="checkUserLogin">
-          <b-nav-item-dropdown text="My Jobs" toggle-class="text-white" right>
-            <b-dropdown-item to="/savedjobs">Saved Jobs</b-dropdown-item>
-            <b-dropdown-item to="/appliedjobs">Applied Jobs</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
 
         <b-navbar-nav tag="li">
           <!-- <b-button style="color: black; background-color: white;" to="/login" v-show="!checkUserLogin">Login</b-button> -->
@@ -106,7 +92,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("session_manager", ["isLoggedIn"]),
+    ...mapGetters("session_manager", ["isLoggedIn", "getUserID"]),
     checkUserLogin() {
       console.log("is User LoggedIn = ", this.isLoggedIn);
       return this.isLoggedIn;
@@ -144,13 +130,16 @@ export default {
     },
     async getUserDetail() {
       const result = await axios.get(
-        "https://6253-103-240-35-190.in.ngrok.io/member-data"
+        "https://c9de-103-240-35-190.in.ngrok.io/member-data"
       );
       this.user.id = result.data.user.id;
     },
     goToMyAccount() {
-      this.$router.push(`/userprofile/${this.user.id}`);
+      this.$router.push('/userprofile/' + this.getUserID);
     },
+    goToAppliedJobs(){
+      this.$router.push('/appliedjobs/' + this.getUserID)
+    }
   },
 };
 </script>
