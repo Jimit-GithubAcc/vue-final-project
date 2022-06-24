@@ -1,6 +1,8 @@
 <template>
+<section>
+  <h1>Edit Profile details</h1>
   <b-container class="mt-4" style="box-shadow: 5px 5px 5px 5px gray; max-width: 800px">
-    <h1>Edit Profile details</h1>
+    
     <b-form inline>
       <b-row>
         <b-col>
@@ -42,23 +44,30 @@
 
       <b-row>
         <b-col class="mt-3 mb-4">
-          <b-button variant="primary" style="width: inherit" type="button" @click="editUserProfile">
-            Submit
+          <b-button variant="outline-primary" style="width: inherit" type="button" @click="editUserProfile">
+            Update
           </b-button>
         </b-col>
         <b-col class="mt-3 mb-4">
-          <b-button variant="warning" style="width: inherit" @click="resetForm">
+          <b-button variant="outline-warning" style="width: inherit" @click="resetForm">
             Reset
           </b-button>
         </b-col>
       </b-row>
     </b-form>
   </b-container>
+     <br />
+     <edit-user-education :userEdu="user.education" v-if="user.education !== null"/>
+     <br />
+     <edit-user-experience :userExp="user.experience" v-if="user.experience !== null" />
+  </section>
 </template>
 
 <script>
 //import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { mapActions,mapState } from 'vuex';
+import editUserEducation from './editUserEducation.vue';
+import editUserExperience from './editUserExperience.vue';
 export default {
   data() {
     return {
@@ -67,9 +76,12 @@ export default {
         contact_number: null,
         avatar: null,
         gender: "",
+        education:null,
+        experience:null,
       },
     };
   },
+  components:{ editUserEducation,editUserExperience },
 /*  validations: {
     user: {
       name: {
@@ -86,21 +98,17 @@ export default {
       },
     },
   },*/
-  created() { 
-    // async fetchSkills(){
-    //    try{
-    //     const response = await axios.get('https://bbea-103-240-35-190.in.ngrok.io/skills');
-    //     this.skills = response.data.data;
-    //     console.log("A",this.skills)
-    //     } catch(err){
-    //     console.log(err)
-    //    }
-    // }
+  mounted() { 
       this.fetchProfile({id: this.$route.params.id});
-      this.setUser();
+      this.user = this.profile;
+      this.user.education = this.education;
+      this.user.experience = this.experience
+      console.log(this.user)
+      console.log("Edu:",this.user.education)
+      console.log("Exp:",this.user.experience)
    },
   computed:{
-    ...mapState("userData",["userData"])
+    ...mapState("userData",["profile","education","experience"])
   },
   methods: {
     ...mapActions("userData", ["addProfile","fetchProfile"]),
@@ -108,9 +116,6 @@ export default {
       const { $dirty, $error } = this.$v.user[name];
       return $dirty ? !$error : null;
     },*/
-    setUser(){
-         this.user = { ...this.user, ...this.userData.profile };
-    },
     addPic(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (files[0] == null) {
@@ -156,7 +161,7 @@ export default {
         .then((success) => {
           console.log(success);
           this.resetForm();
-          this.$toast.success("Profile edited added.", { timeout: 3000 });
+          this.$toast.success("Profile edited.", { timeout: 3000 });
           this.$router.push("/");
         })
         .catch((error) => {

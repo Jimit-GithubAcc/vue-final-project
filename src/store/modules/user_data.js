@@ -4,7 +4,7 @@ const BASE_URL = "https://c9de-103-240-35-190.in.ngrok.io/";
 
 const state = {
     skills: [],
-    userData: {
+   userData: {
         profile: {
             name: null,
             contact_number: null,
@@ -31,6 +31,7 @@ const state = {
             description: null,
         },
     },
+    profile:null,
     education:null,
     experience:null
 };
@@ -43,7 +44,7 @@ const getters = {
         return state.skills;
     },
     getUserProfile(state) {
-        return state.userData.profile;
+        return state.profile;
     }
 };
 
@@ -80,10 +81,38 @@ const actions = {
                 .catch((error) => reject(error));
         });
     },
+    editUserEducationData({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            axios
+                .patch(`${BASE_URL}educations/${payload.id}`, payload)
+                .then((response) => {
+                    if (response.status === 200) {
+                        commit("setUserEducationData", response.data);
+                        resolve(true);
+                        this.$toast.success(response.message, { timeout: 3000 });
+                    }
+                })
+                .catch((error) => reject(error));
+        });
+    },
     addUserExperienceData({ commit }, payload) {
         return new Promise((resolve, reject) => {
             axios
                 .post(`${BASE_URL}experiences`, payload)
+                .then((response) => {
+                    if (response.status === 200) {
+                        commit("setUserExperienceData", response.data);
+                        resolve(true);
+                        this.$toast.success(response.message, { timeout: 3000 });
+                    }
+                })
+                .catch((error) => reject(error));
+        });
+    },
+    editUserExperienceData({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            axios
+                .patch(`${BASE_URL}experiences/${payload.id}`, payload)
                 .then((response) => {
                     if (response.status === 200) {
                         commit("setUserExperienceData", response.data);
@@ -121,6 +150,8 @@ const actions = {
                 .then((response) => {
                     console.log(response.data.data.user_detail);
                     commit("fetchUserProfile", response.data.data.user_detail);
+                    commit("fetchUserExperience", response.data.data.experiences);
+                    commit("fetchUserEducation", response.data.data.educations);
                     resolve(response);
                 })
                 .catch((err) => reject(err));
@@ -145,15 +176,14 @@ const mutations = {
         state.userData = data;
     },
     fetchUserProfile(state,data){
-        state.userData.profile.name = data.name;
-        state.userData.profile.contact_number = data.contact_number;
-        state.userData.profile.gender = data.gender;
-        state.userData.profile.id = data.id;
-        state.userData.profile.avatar = data.avatar;        
-    }
-    // getUserEducationData(state, data){
-    //     state.userData.experience = data 
-    // }
+        state.profile = data;
+    },
+    fetchUserExperience(state, data){
+          state.experience = data[data.length-1]; 
+     },
+     fetchUserEducation(state,data){
+        state.education = data[data.length-1]; 
+     }
 };
 
 export default {
