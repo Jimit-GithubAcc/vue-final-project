@@ -6,7 +6,7 @@
           <div class="card mb-4">
             <div class="card-body text-center">
               <img
-                src="https://picsum.photos/200/200/?image=41"
+                :src="user.user_detail ? user.user_detail.custom_profile :'https://picsum.photos/200/200/?image=41' "
                 alt="avatar"
                 class="rounded-circle img-fluid"
                 style="width: 150px"

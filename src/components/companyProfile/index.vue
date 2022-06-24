@@ -1,33 +1,26 @@
 <template>
     <div>
-      <company-profile-form></company-profile-form>
-      <edit-company-profile :allCompanyData="allCompanyData"></edit-company-profile>
+      <company-profile-form v-if="!allCompanyData"></company-profile-form>
+      <edit-company-profile :companyData="allCompanyData"></edit-company-profile>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 import CompanyProfileForm from './CompanyProfileForm.vue'
 import EditCompanyProfile from './EditCompanyProfile.vue'
 export default {
   components: { 
-    CompanyProfileForm, 
-    EditCompanyProfile 
-    },
-    data() {
-      return {
-        companyData: null
-      }
+    CompanyProfileForm, EditCompanyProfile 
     },
     computed: {
       ...mapState("companyData",["allCompanyData"])
     },
     methods: {
-      ...mapState("companyData",["fetchCompanyProfileData"])
+      ...mapActions("companyData",["fetchCompanyProfileData"])
     },
     mounted() {
       this.fetchCompanyProfileData()
-      this.companyData = this.allCompanyData
       console.log("companyData = ",this.companyData);
     } 
 }
