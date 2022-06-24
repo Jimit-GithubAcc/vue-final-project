@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-// import {getAuthToken} from '../store/modules/session__manager'
-// import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -33,7 +31,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../components/Login.vue'),
-    
     // meta: {auth: false}
   },
   {
@@ -224,6 +221,10 @@ const routes = [
     //     next("/firstloginpage")
     //   }
     // },
+  },
+  {
+    path: '*',
+    redirect: '/firstloginpage',
   }
 
 ]
@@ -232,10 +233,6 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
-
-// router.beforeEach(() => {
-//   console.log("Store = ", store)
-// })
 
 // router.beforeEach((to, from, next) => {
 //   if('auth' in to.meta && to.meta.auth){
