@@ -19,7 +19,8 @@
                 <p class="text-muted mb-4"><b>CV : </b>{{candidate.user_resume_url.slice(0,30)}}</p>
                 <b-button
                   variant="outline-primary"
-                  @click="viewCandidateDetails(candidate.id)"
+                  @click="viewCandidateDetails(candidate.user_id)"
+                  :token="getAuthToken"
                   >View Details</b-button
                 >
               </div>
@@ -28,7 +29,7 @@
 
         </div>
       </div>
-      <div class="mt-5">
+      <div class="mt-5" v-else>
         <h1>No candidate to display.</h1>
       </div>
     </section>
@@ -40,11 +41,12 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters("jobs", ["getAllCandidates"]),
+    ...mapGetters("company_manager", ["getAuthToken"])
   },
   methods: {
     ...mapActions("jobs",["getCandidates"]),
     viewCandidateDetails(id) {
-      this.$router.push(`/userprofile/${id}`);
+      this.$router.push(`/candidate/${id}`);
     },
   },
   mounted() {

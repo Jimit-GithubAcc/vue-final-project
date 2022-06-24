@@ -21,7 +21,7 @@ const state = {
 
 const getters = {
     getJobs(state){
-        return state.jobsArr
+        return state.jobsArr.reverse()
     },
     getFilteredJobs: (state) => {
         if (!state.searchTerm) return state.jobsArr;
@@ -54,6 +54,10 @@ const mutations = {
     },
     getAppliedJobs(state, data){
         state.appliedJobsArr = data
+    },
+    deleteAppJob(state, jobId){
+        let jobs = state.appliedJobsArr.filter(job => job.id != jobId);
+        state.appliedJobsArr = jobs 
     }
     // getSingleJobData(state, data){
     //     state.singleJob = data
@@ -88,9 +92,17 @@ const actions = {
         commit("getCandidatesData", response.data)
     },
     async getAppliedJobsData({commit}){
-        const response = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/user/job_applications/my_job_application`)
+        const response = await axios.get(`${BASE_URL}user/job_applications/my_job_application`)
         console.log(response.data)
         commit("getAppliedJobs", response.data)
+    },
+    async deleteAppliedJob({commit}, payload){
+        const response = await axios.delete(`${BASE_URL}user/job_applications/delete_job_application/${payload.id}`)
+        console.log(response)
+        if(response.status === 200 || response.status == 204){
+            commit("deleteAppliedJob", response.data.data)
+        }
+        
     }
     // async getSingleJob({commit}, id){
     //     const response = await axios.get(`${BASE_URL}jobs/${id}`)

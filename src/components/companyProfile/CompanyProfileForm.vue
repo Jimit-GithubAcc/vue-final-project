@@ -248,6 +248,7 @@ export default {
         country: "",
         streetInfo: "",
         pincode: "",
+        images: ""
       },
     };
   },
@@ -306,6 +307,7 @@ export default {
         companyDescription: "",
         companyImage: "",
         area: "",
+        images: "",
         city: "",
         state: "",
         country: "",
@@ -340,6 +342,7 @@ export default {
           phone: this.company.contact,
           logo: this.company.companyLogo,
           banner: this.company.companyBanner,
+          images: this.company.images,
           company_street: this.company.streetInfo,
           company_area: this.company.area,
           company_city: this.company.city,

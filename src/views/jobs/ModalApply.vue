@@ -84,6 +84,7 @@ export default {
                   console.log(success)
                   this.$toast.success("applied successfully.", { timeout: 3000 });
                   this.showModal = false;
+                  this.$router.push("/")
                 }).catch((err) => {
                      console.log(err);
                      this.$toast.error("Something wrong" ,{ timeout : 3000 });

@@ -24,7 +24,7 @@
                 <p class="text-muted mb-2" v-if="job.feedback">
                   <b>Feedback : </b>{{ job.feedback }}
                 </p>
-                <b-button variant="outline-primary" v-if="job.status === 'Application Received'" @click="deleteJob">Delete Applied Job</b-button>
+                <!-- <b-button variant="outline-primary" v-if="job.status === 'Application Received'" @click="deleteAppliedJob(job)">Delete Applied Job</b-button> -->
               </div>
             </div>
           </div>
@@ -47,7 +47,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions("jobs", ["getAppliedJobsData"]),
+    ...mapActions("jobs", ["getAppliedJobsData", "deleteAppliedJob"]),
+    // deleteJob(job){
+    //     let response = confirm('Are you want to delete this job?')
+    //     if(!response){
+    //         this.$toast.error("Some error occurred", { timeout : 3000})
+    //     }
+    //     this.deleteAppliedJob(job)
+    //     this.$toast.success("Job deleted successfully", { timeout : 3000})
+    // }
   },
   mounted() {
     this.getAppliedJobsData();

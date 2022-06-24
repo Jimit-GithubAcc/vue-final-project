@@ -1,14 +1,34 @@
 <template>
     <div>
       <company-profile-form></company-profile-form>
+      <!-- <edit-company-profile :companyData="companyData"></edit-company-profile> -->
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import CompanyProfileForm from './CompanyProfileForm.vue'
+// import EditCompanyProfile from './EditCompanyProfile.vue'
 export default {
-  components: { CompanyProfileForm },
-        
+  components: { 
+    CompanyProfileForm, 
+    // EditCompanyProfile 
+    },
+  data() {
+    return {
+      companyData: {}
+    }
+  },  
+  methods: {
+    async getProfileDetails(){
+      const response = await axios.get(`https://c9de-103-240-35-190.in.ngrok.io/company/company_details`)
+      this.companyData = response.data.data
+      console.log("Company Data = ",response.data.data)
+    }  
+  },
+  mounted() {
+    this.getProfileDetails()
+  }
 }
 </script>
 <style scoped>
